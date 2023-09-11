@@ -35,6 +35,7 @@ public class UserController {
             User user = this.userService.getUser(username);
             System.out.println(user);
             request.getSession().setAttribute("list",user);
+            System.out.println("?????");
             return "home";
         }else {
             return "login";
