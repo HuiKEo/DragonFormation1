@@ -34,8 +34,6 @@ public class UserController {
         if (userService.validateUser(username,password)){
             User user = this.userService.getUser(username);
             System.out.println(user);
-            System.out.println(user);
-            System.out.println(user);
             request.getSession().setAttribute("list",user);
             return "home";
         }else {
