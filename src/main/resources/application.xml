@@ -10,9 +10,14 @@
             http://www.springframework.org/schema/context
             http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <bean destroy-method="clone" class="com.alibaba.druid.pool.DruidDataSource" id="dataSource">
+    <!-- 组件扫描 -->
+    <context:component-scan base-package="com.it">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <bean class="com.alibaba.druid.pool.DruidDataSource" id="dataSource">
         <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
-        <property name="username" value="wzh"/>
+        <property name="username" value="cl"/>
         <property name="password" value="Aa1Bb2Cc3"/>
         <property name="url" value="jdbc:mysql://rm-cn-zsk3dumjm0029p9o.rwlb.cn-chengdu.rds.aliyuncs.com:3306/dragongroup?characterEncoding=utf8&amp;useSSL=false&amp;serverTimezone=UTC&amp;rewriteBatchedStatements=true&amp;allowMultiQueries=true"/>
     </bean>
@@ -22,6 +27,12 @@
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
         <property name="configLocation" value="classpath:mybatis-config.xml" />
+        <property name="mapperLocations" value="classpath:com/it/mapper/*.xml"/>
+    </bean>
+
+    <!-- 扫描Mapper代理 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.it.mapper" />
     </bean>
 
     <!-- 事务管理器 -->
@@ -29,10 +40,6 @@
           class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource" />
     </bean>
-
-<!--    <bean class="org.mybatis.spring.SqlSessionTemplate" id="sessionTemplate">-->
-<!--        <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"/>-->
-<!--    </bean>-->
 
     <!-- 声明式事务的定义 -->
     <!-- AOP 事务处理 开始 -->
@@ -53,15 +60,5 @@
             <tx:method name="delete*" propagation="REQUIRED" />
         </tx:attributes>
     </tx:advice>
-
-    <!-- 组件扫描 -->
-    <context:component-scan base-package="com.it" />
-
-    <!-- 扫描Mapper代理 -->
-    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.it.mapper" />
-<!--        <property name="sqlSessionFactoryBeanName" value="sessionTemplate"/>-->
-    </bean>
-
 
 </beans>

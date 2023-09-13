@@ -4,7 +4,20 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <!--configuration核心配置文件-->
 <configuration>
+    <settings>
+        <!--将下划线映射为驼峰-->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+
+        <setting name="logImpl" value="SLF4J"/>
+    </settings>
+
     <typeAliases>
         <package name="com.it.pojo"/>
     </typeAliases>
+
+    <plugins>
+        <!--配置分页插件-->
+        <plugin interceptor="com.github.pagehelper.PageInterceptor"></plugin>
+    </plugins>
+
 </configuration>

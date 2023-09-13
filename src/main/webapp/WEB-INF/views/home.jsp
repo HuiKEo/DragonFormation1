@@ -15,7 +15,7 @@
 <h1>登录成功！！！</h1>
 <div style="align-content: center">
     <div style="height: 200px;width: 100%;background-color: red">
-        <%@include file="head.jsp" %>
+        <%@include file="common/head.jsp" %>
     </div>
     <div style="height: auto;width: 100%;background-color: skyblue">
         <div style="display: inline-block;height: auto;width: 20%;background-color: aquamarine">
@@ -26,7 +26,7 @@
         </div>
     </div>
     <div style="height: 200px;width: 100%;background-color: orange">
-        <%@include file="foot.jsp" %>
+        <%@include file="common/foot.jsp" %>
     </div>
 </div>
 </body>
