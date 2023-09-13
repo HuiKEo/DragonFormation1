@@ -19,4 +19,8 @@
     </bean>
 
     <mvc:annotation-driven/>
+    <mvc:default-servlet-handler/>
+
+    <mvc:view-controller path="login.jsp" view-name="login"/>
+    <mvc:view-controller path="user_list.jsp" view-name="user_list"/>
 </beans>
