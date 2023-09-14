@@ -17,11 +17,12 @@
 <!--    <security:global-method-security jsr250-annotations="enabled"/>-->
 <!--    <security:global-method-security secured-annotations="enabled"></security:global-method-security>-->
     <!-- 配置不拦截的资源（静态资源及登录相关）-->
-    <security:http pattern="/login.jsp" security="none"/>
-    <security:http pattern="/fail.jsp" security="none"/>
+    <security:http pattern="/login.html" security="none"/>
+    <security:http pattern="/fail.html" security="none"/>
     <security:http pattern="/css/**" security="none"/>
-    <security:http pattern="/img/**" security="none"/>
-    <security:http pattern="/plugins/**" security="none"/>
+    <security:http pattern="/fonts/**" security="none"/>
+    <security:http pattern="/images/**" security="none"/>
+    <security:http pattern="/js/**" security="none"/>
     <!--
         配置具体的规则
         auto-config="true"    不用自己编写登录的页面，框架提供默认登录页面
@@ -32,25 +33,25 @@
 <!--        <security:intercept-url pattern="/**" access="ROLE_USER,ROLE_ADMIN"/>-->
         <security:intercept-url pattern="/**" access="hasAnyRole('ROLE_OPERATOR','ROLE_WORKSHOP','ROLE_STOREROOM','ROLE_DRIVER')"/>
 
-<!--        &lt;!&ndash; 定义跳转的具体的页面 &ndash;&gt;-->
-<!--        &lt;!&ndash;login-page  自定义登陆页面&ndash;&gt;-->
-<!--        &lt;!&ndash;login-processing-url  登录请求拦截的url,也就是form表单提交时指定的action&ndash;&gt;-->
-<!--        &lt;!&ndash;default-target-url  默认登录成功后跳转的页面&ndash;&gt;-->
-<!--        &lt;!&ndash;authentication-failure-url  用户权限校验失败之后才会跳转到这个页面&ndash;&gt;-->
-<!--        &lt;!&ndash;authentication-success-forward-url 用户权限校验成功之后会跳转的页面&ndash;&gt;-->
+        <!-- 定义跳转的具体的页面 -->
+        <!--login-page  自定义登陆页面-->
+        <!--login-processing-url  登录请求拦截的url,也就是form表单提交时指定的action-->
+        <!--default-target-url  默认登录成功后跳转的页面-->
+        <!--authentication-failure-url  用户权限校验失败之后才会跳转到这个页面-->
+        <!--authentication-success-forward-url 用户权限校验成功之后会跳转的页面-->
         <security:form-login
-                login-page="/login.jsp"
+                login-page="/login.html"
                 login-processing-url="/login"
-                default-target-url="/user_list.jsp"
+                default-target-url="/client_index.html"
                 username-parameter="username"
                 password-parameter="password"
-                authentication-failure-url="/fail.jsp"
+                authentication-failure-url="/fail.html"
         />
 
         <!-- 关闭跨域请求 -->
         <security:csrf disabled="true"/>
         <!-- 退出，只要路径中有/logout.do，就可以直接点击退出 -->
-        <security:logout invalidate-session="true" logout-url="/logout" logout-success-url="/login.jsp"/>
+        <security:logout invalidate-session="true" logout-url="/logout" logout-success-url="/login.html"/>
 
     </security:http>
 

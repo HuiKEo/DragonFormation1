@@ -7,7 +7,7 @@
     <settings>
         <!--将下划线映射为驼峰-->
         <setting name="mapUnderscoreToCamelCase" value="true"/>
-
+        <!--开启日志-->
         <setting name="logImpl" value="SLF4J"/>
     </settings>
 
