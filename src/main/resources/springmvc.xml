@@ -54,8 +54,8 @@
 <!--    @RolesAllowed 注解生效-->
     <aop:aspectj-autoproxy proxy-target-class="true"/>
 
-<!--    <mvc:view-controller path="client_index.html" view-name="client_index"></mvc:view-controller>-->
     <mvc:view-controller path="login.html" view-name="login"></mvc:view-controller>
+    <mvc:view-controller path="/" view-name="client_index"></mvc:view-controller>
     <mvc:view-controller path="fail.html" view-name="fail"></mvc:view-controller>
     <mvc:view-controller path="403.html" view-name="403"></mvc:view-controller>
 

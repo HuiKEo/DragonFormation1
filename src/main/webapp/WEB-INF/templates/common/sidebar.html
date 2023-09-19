@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<base th:href="@{/}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/jquery-1.10.2.min.js"></script>
+    <script>
+        $(function (){
+            $.ajax({
+                url:"http://localhost:8080/waste_product/getMenu",
+                type:"get",
+                success:function (menuList){
+                    var str = '';
+                    for (let i = 0; i < menuList.length; i++) {
+                        str += "<li><a href="+menuList[i].path+">"+menuList[i].menu+"</a></li>"
+                    }
+
+                    $("#menuList").html(str);
+                }
+            })
+        })
+    </script>
+</head>
+<body>
+<div th:fragment="sidebar">
+    <ul class="nav nav-pills nav-stacked custom-nav">
+        <li class="menu-list"><a href="index.html"><i class="fa fa-home"></i> <span>固废</span></a>
+            <ul class="sub-menu-list">
+                <li><a href="index.html">主页</a></li>
+            </ul>
+        </li>
+        <li class="menu-list nav-active"><a href="#"><i class="fa fa-th-list"></i> <span>系统管理</span></a>
+            <ul class="sub-menu-list" id="menuList">
+                <li><a href="basic_table.html">用户管理</a></li>
+                <li><a href="dynamic_table.html">角色管理</a></li>
+                <li><a href="responsive_table.html">菜单管理</a></li>
+                <li><a href="editable_table.html"> Edit Table</a></li>
+            </ul>
+        </li>
+        <li><a th:href="@{/logout}"><i class="fa fa-sign-in"></i><span>退出登录</span></a></li>
+    </ul>
+</div>
+</body>
+</html>

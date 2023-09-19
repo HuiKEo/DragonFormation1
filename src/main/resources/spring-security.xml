@@ -31,7 +31,7 @@
     <security:http auto-config="true" use-expressions="true">
         <!-- 配置具体的拦截的规则 pattern="请求路径的规则" access="访问系统的人，必须有ROLE_USER、Role_ADMIN的角色" -->
 <!--        <security:intercept-url pattern="/**" access="ROLE_USER,ROLE_ADMIN"/>-->
-        <security:intercept-url pattern="/**" access="hasAnyRole('ROLE_OPERATOR','ROLE_WORKSHOP','ROLE_STOREROOM','ROLE_DRIVER')"/>
+        <security:intercept-url pattern="/**" access="hasAnyRole('ROLE_OPERATOR','ROLE_COMPANY','ROLE_DRIVER','ROLE_DISPOSITION')"/>
 
         <!-- 定义跳转的具体的页面 -->
         <!--login-page  自定义登陆页面-->
