@@ -211,7 +211,7 @@
   </update>
 <!--  List<Menu> queryMenuByRoleId(Integer id);-->
   <select id="queryMenuByRoleId" resultType="com.it.pojo.Menu">
-    SELECT menu.*
+    SELECT distinct menu.*
     FROM role,menu,role_menu
     WHERE role.`id`=role_menu.`role_id` AND menu.`id` = role_menu.`menu_id`
     AND role.`id` = #{id}

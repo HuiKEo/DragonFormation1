@@ -38,12 +38,19 @@ public class MenuServiceImpl implements MenuService {
         List<Role> roleList = roleMapper.queryRoleByUserId(user.getId());
 
         ArrayList<Menu> menus = new ArrayList<>();
-        HashSet<Menu> set = new HashSet<>();
         for (Role role : roleList) {
-            set.addAll(menuMapper.queryMenuByRoleId(role.getId()));
-            menus.clear();
-            menus.addAll(set);
+            menus.addAll(menuMapper.queryMenuByRoleId(role.getId()));
         }
-        return menus;
+
+        //去重
+        ArrayList<Menu> menuList = new ArrayList<>();
+        HashSet<Integer> ids = new HashSet<>();
+        for (Menu menu : menus) {
+          ids.add(menu.getId());
+        }
+        for (Integer id : ids) {
+            menuList.add(menuMapper.selectByPrimaryKey(id));
+        }
+        return menuList;
     }
 }
