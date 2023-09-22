@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<base th:href="@{/}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="keywords"
+          content="admin, dashboard, bootstrap, template, flat, modern, theme, responsive, fluid, retina, backend, html5, css, css3">
+    <meta name="description" content="">
+    <meta name="author" content="ThemeBucket">
+    <link rel="shortcut icon" href="#" type="image/png">
+
+    <title>AdminX</title>
+
+    <!--icheck-->
+    <link href="js/iCheck/skins/minimal/minimal.css" rel="stylesheet">
+    <link href="js/iCheck/skins/square/square.css" rel="stylesheet">
+    <link href="js/iCheck/skins/square/red.css" rel="stylesheet">
+    <link href="js/iCheck/skins/square/blue.css" rel="stylesheet">
+
+    <!--dashboard calendar-->
+    <link href="css/clndr.css" rel="stylesheet">
+
+
+    <!--common-->
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/style-responsive.css" rel="stylesheet">
+
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+    <script src="js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $.ajax({
+                url: "http://localhost:8080/waste_product/getMenu",
+                type: "GET",
+                dataType:"json",
+                success: function (menuList) {
+                    console.log(menuList)
+                    var str = '';
+                    for (let i = 0; i < menuList.length; i++) {
+                        str += "<li><a href=" + menuList[i].path + ">" + menuList[i].menu + "</a></li>"
+                    }
+                    $("#menuList").html(str);
+                }
+            })
+        })
+    </script>
+</head>
+
+<body class="sticky-header">
+
+<section>
+    <!-- left side start-->
+    <div class="left-side sticky-left-side">
+
+        <!--logo and iconic logo start-->
+        <div class="logo">
+            <a href="index.html"><img src="images/logo.png" alt=""></a>
+        </div>
+
+        <div class="logo-icon text-center">
+            <a href="index.html"><img src="images/logo_icon.png" alt=""></a>
+        </div>
+        <!--logo and iconic logo end-->
+
+        <div class="left-side-inner">
+
+            <!-- visible to small devices only -->
+            <div class="visible-xs hidden-sm hidden-md hidden-lg">
+                <div class="media logged-user">
+                    <img alt="" src="images/photos/user-avatar.png" class="media-object">
+                    <div class="media-body">
+                        <h4><a href="#">John Doe</a></h4>
+                        <span>"Hello There..."</span>
+                    </div>
+                </div>
+
+                <h5 class="left-nav-title">Account Information</h5>
+                <ul class="nav nav-pills nav-stacked custom-nav">
+                    <li><a href="#"><i class="fa fa-user"></i> <span>Profile</span></a></li>
+                    <li><a href="#"><i class="fa fa-cog"></i> <span>Settings</span></a></li>
+                    <li><a href="#"><i class="fa fa-sign-out"></i> <span>Sign Out</span></a></li>
+                </ul>
+            </div>
+
+            <!--sidebar nav start-->
+            <ul class="nav nav-pills nav-stacked custom-nav">
+                <li class="menu-list nav-active"><a href="index.html"><i class="fa fa-home"></i> <span>固废</span></a>
+                    <ul class="sub-menu-list">
+                        <li class="active"><a href="index.html">主页</a></li>
+                    </ul>
+                </li>
+                <li class="menu-list"><a href="#"><i class="fa fa-th-list"></i> <span>系统管理</span></a>
+                    <ul class="sub-menu-list" id="menuList">
+                        <li><a href="basic_table.html">用户管理</a></li>
+                        <li><a href="dynamic_table.html">角色管理</a></li>
+                        <li><a href="responsive_table.html">菜单管理</a></li>
+                        <li><a href="editable_table.html"> Edit Table</a></li>
+                    </ul>
+                </li>
+                <li><a href="login.html"><i class="fa fa-sign-in"></i><span>退出登录</span></a></li>
+            </ul>
+            <!--sidebar nav end-->
+
+        </div>
+    </div>
+    <!-- left side end-->
+
+    <!-- main content start-->
+    <div class="main-content">
+
+        <!-- header section start-->
+        <div class="header-section">
+
+            <!--toggle button start-->
+            <a class="toggle-btn"><i class="fa fa-bars"></i></a>
+            <!--toggle button end-->
+
+            <!--notification menu start -->
+            <nav th:include="common/header :: notification-info"></nav>
+            <!--notification menu end -->
+
+        </div>
+        <!-- header section end-->
+
+
+        <!--body wrapper start-->
+        <div class="wrapper">
+            <div class="row states-info">
+                <div class="col-md-3">
+                    <div class="panel red-bg">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <i class="fa fa-money"></i>
+                                </div>
+                                <div class="col-xs-8">
+                                    <span class="state-title"> Dollar Profit Today </span>
+                                    <h4>$ 23,232</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="panel blue-bg">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <i class="fa fa-tag"></i>
+                                </div>
+                                <div class="col-xs-8">
+                                    <span class="state-title">  Copy Sold Today  </span>
+                                    <h4>2,980</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="panel green-bg">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <i class="fa fa-gavel"></i>
+                                </div>
+                                <div class="col-xs-8">
+                                    <span class="state-title">  New Order  </span>
+                                    <h4>5980</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="panel yellow-bg">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <i class="fa fa-eye"></i>
+                                </div>
+                                <div class="col-xs-8">
+                                    <span class="state-title">  Unique Visitors  </span>
+                                    <h4>10,000</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="panel widget-info-one">
+                        <div class="avatar-img">
+                            <img src="images/gallery/image3.jpg" alt=""/>
+                        </div>
+                        <div class="inner">
+                            <div class="avatar"><img alt="" src="images/photos/userprofile.png"></div>
+                            <h5>Margarita Rose</h5>
+                            <span class="subtitle">
+                                Praesent magna nunc, tincidunt pretium.
+                            </span>
+                        </div>
+                        <div class="panel-footer">
+                            <ul class="post-view">
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-eye"></i>
+                                    </a>
+                                    109
+                                </li>
+                                <li class="active">
+                                    <a href="#">
+                                        <i class="fa fa-comment"></i>
+                                    </a>
+                                    233
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-heart"></i>
+                                    </a>
+                                    34
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="panel">
+                                <div class="panel-body extra-pad">
+                                    <h4 class="pros-title">prospective <span>leads</span></h4>
+                                    <div class="row">
+                                        <div class="col-sm-4 col-xs-4">
+                                            <div id="p-lead-1"></div>
+                                            <p class="p-chart-title">Laptop</p>
+                                        </div>
+                                        <div class="col-sm-4 col-xs-4">
+                                            <div id="p-lead-2"></div>
+                                            <p class="p-chart-title">iPhone</p>
+                                        </div>
+                                        <div class="col-sm-4 col-xs-4">
+                                            <div id="p-lead-3"></div>
+                                            <p class="p-chart-title">iPad</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="panel">
+                                <div class="panel-body extra-pad">
+                                    <div class="col-sm-6 col-xs-6">
+                                        <div class="v-title">Visits</div>
+                                        <div class="v-value">10,090</div>
+                                        <div id="visit-1"></div>
+                                        <div class="v-info">Pages/Visit</div>
+                                    </div>
+                                    <div class="col-sm-6 col-xs-6">
+                                        <div class="v-title">Unique Visitors</div>
+                                        <div class="v-value">8,173</div>
+                                        <div id="visit-2"></div>
+                                        <div class="v-info">Avg. Visit Duration</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <ul class="iconic-list">
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-heart"></i>
+                                    </a>
+                                </li>
+                                <li class="active">
+                                    <a href="#">
+                                        <i class="fa fa-camera-retro"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-calendar"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="last" href="#">
+                                        <i class="fa fa-crosshairs"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="col-md-4">
+                    <div class="panel">
+                        <div class="panel-body">
+                            <div class="dir-info">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <div class="avatar">
+                                            <img src="images/photos/user2.png" alt=""/>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <h5>Wild Awake</h5>
+                                        <span>
+                                            <a href="#" class="small"> katy Perry</a>
+                                        </span>
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <a class="dir-like" href="#">
+                                            <span class="small">434</span>
+                                            <i class="fa fa-heart"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <div class="avatar">
+                                            <img src="images/photos/user1.png" alt=""/>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <h5>Bulet Proof</h5>
+                                        <span>
+                                            <a href="#" class="small"> Bruno Mars</a>
+                                        </span>
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <a class="dir-like" href="#">
+                                            <span class="small">441</span>
+                                            <i class="fa fa-heart"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <div class="avatar">
+                                            <img src="images/photos/user3.png" alt=""/>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <h5>Bit it</h5>
+                                        <span>
+                                            <a href="#" class="small"> Jackson</a>
+                                        </span>
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <a class="dir-like" href="#">
+                                            <span class="small">124</span>
+                                            <i class="fa fa-heart"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <div class="avatar">
+                                            <img src="images/photos/user4.png" alt=""/>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <h5>Its my life</h5>
+                                        <span>
+                                            <a href="#" class="small"> Bon jovi</a>
+                                        </span>
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <a class="dir-like" href="#">
+                                            <span class="small">334</span>
+                                            <i class="fa fa-heart"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <div class="avatar">
+                                            <img src="images/photos/user1.png" alt=""/>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <h5>Bulet Proof</h5>
+                                        <span>
+                                            <a href="#" class="small"> Bruno Mars</a>
+                                        </span>
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <a class="dir-like" href="#">
+                                            <span class="small">44</span>
+                                            <i class="fa fa-heart"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--body wrapper end-->
+
+        <!--footer section start-->
+        <footer>
+            2014 &copy; AdminEx by ThemeBucket
+        </footer>
+        <!--footer section end-->
+
+
+    </div>
+    <!-- main content end-->
+</section>
+
+<!-- Placed js at the end of the document so the pages load faster -->
+<script src="js/jquery-1.10.2.min.js"></script>
+<script src="js/jquery-ui-1.9.2.custom.min.js"></script>
+<script src="js/jquery-migrate-1.2.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/modernizr.min.js"></script>
+<script src="js/jquery.nicescroll.js"></script>
+
+<!--easy pie chart-->
+<script src="js/easypiechart/jquery.easypiechart.js"></script>
+<script src="js/easypiechart/easypiechart-init.js"></script>
+
+<!--Sparkline Chart-->
+<script src="js/sparkline/jquery.sparkline.js"></script>
+<script src="js/sparkline/sparkline-init.js"></script>
+
+<!--icheck -->
+<script src="js/iCheck/jquery.icheck.js"></script>
+<script src="js/icheck-init.js"></script>
+
+<!-- jQuery Flot Chart-->
+<script src="js/flot-chart/jquery.flot.js"></script>
+<script src="js/flot-chart/jquery.flot.tooltip.js"></script>
+<script src="js/flot-chart/jquery.flot.resize.js"></script>
+<script src="js/flot-chart/jquery.flot.pie.resize.js"></script>
+<script src="js/flot-chart/jquery.flot.selection.js"></script>
+<script src="js/flot-chart/jquery.flot.stack.js"></script>
+<script src="js/flot-chart/jquery.flot.time.js"></script>
+<script src="js/main-chart.js"></script>
+
+<!--common scripts for all pages-->
+<script src="js/scripts.js"></script>
+
+
+</body>
+</html>

@@ -50,4 +50,15 @@ public class Menu {
     public void setIcon(String icon) {
         this.icon = icon == null ? null : icon.trim();
     }
+
+    @Override
+    public String toString() {
+        return "Menu{" +
+                "id=" + id +
+                ", menu='" + menu + '\'' +
+                ", path='" + path + '\'' +
+                ", parentid=" + parentid +
+                ", icon='" + icon + '\'' +
+                '}';
+    }
 }

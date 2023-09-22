@@ -1,17 +1,18 @@
 package com.it.pojo;
 
 import lombok.Data;
-import org.springframework.stereotype.Component;
 
-import java.util.Date;
+import java.util.List;
 
-@Component
 @Data
 public class User {
     private Integer id;
-    private String userName;
+    private String username;
     private String password;
-    private Integer position;
-    private Date createTime;
+    private String idnumber;
+    private String phone;
+    private Integer status;
+    private String createtime;
 
+    private List<Role> roles;
 }

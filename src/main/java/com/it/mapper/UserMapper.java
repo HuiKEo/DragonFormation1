@@ -1,18 +1,29 @@
 package com.it.mapper;
 
 import com.it.pojo.User;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-
+import com.it.pojo.UserExample;
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
-@Mapper
 public interface UserMapper {
+    long countByExample(UserExample example);
 
-    @Select("select * from user")
-    List<User> findAll();
+    int deleteByExample(UserExample example);
 
-    @Select("SELECT * FROM user WHERE username = #{username}")
-    User getUserByUsername(String userName);
+    int insert(User record);
 
+    int insertSelective(User record);
+
+    List<User> selectByExample(UserExample example);
+
+    int updateByExampleSelective(@Param("record") User record, @Param("example") UserExample example);
+
+    int updateByExample(@Param("record") User record, @Param("example") UserExample example);
+
+    /**
+     * 根据姓名查询
+     * @param username
+     * @return
+     */
+    User queryUserByName(String username);
 }

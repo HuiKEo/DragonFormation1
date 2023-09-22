@@ -28,4 +28,3 @@ public interface MenuMapper {
 
     int updateByPrimaryKey(Menu record);
 }
-/*测试*/

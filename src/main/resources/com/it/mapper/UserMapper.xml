@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.it.mapper.MenuMapper">
-  <resultMap id="BaseResultMap" type="com.it.pojo.Menu">
+<mapper namespace="com.it.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="com.it.pojo.User">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="menu" jdbcType="VARCHAR" property="menu" />
-    <result column="path" jdbcType="VARCHAR" property="path" />
-    <result column="parentId" jdbcType="INTEGER" property="parentid" />
-    <result column="icon" jdbcType="VARCHAR" property="icon" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="IDnumber" jdbcType="VARCHAR" property="idnumber" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -67,15 +69,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, menu, path, parentId, icon
+    id, username, password, IDnumber, phone, status, createTime
   </sql>
-  <select id="selectByExample" parameterType="com.it.pojo.MenuExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.it.pojo.UserExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from menu
+    from users
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -86,86 +88,105 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from menu
+    from users
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from menu
+    delete from users
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.it.pojo.MenuExample">
-    delete from menu
+  <delete id="deleteByExample" parameterType="com.it.pojo.UserExample">
+    delete from users
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.it.pojo.Menu">
-    insert into menu (id, menu, path, 
-      parentId, icon)
-    values (#{id,jdbcType=INTEGER}, #{menu,jdbcType=VARCHAR}, #{path,jdbcType=VARCHAR}, 
-      #{parentid,jdbcType=INTEGER}, #{icon,jdbcType=VARCHAR})
+  <insert id="insert" parameterType="com.it.pojo.User">
+    insert into users (id, username, password, 
+      IDnumber, phone, status, 
+      createTime)
+    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{idnumber,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{createtime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.it.pojo.Menu">
-    insert into menu
+  <insert id="insertSelective" parameterType="com.it.pojo.User">
+    insert into users
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
       </if>
-      <if test="menu != null">
-        menu,
+      <if test="username != null">
+        username,
       </if>
-      <if test="path != null">
-        path,
+      <if test="password != null">
+        password,
       </if>
-      <if test="parentid != null">
-        parentId,
+      <if test="idnumber != null">
+        IDnumber,
       </if>
-      <if test="icon != null">
-        icon,
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createtime != null">
+        createTime,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="menu != null">
-        #{menu,jdbcType=VARCHAR},
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
       </if>
-      <if test="path != null">
-        #{path,jdbcType=VARCHAR},
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
       </if>
-      <if test="parentid != null">
-        #{parentid,jdbcType=INTEGER},
+      <if test="idnumber != null">
+        #{idnumber,jdbcType=VARCHAR},
       </if>
-      <if test="icon != null">
-        #{icon,jdbcType=VARCHAR},
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.it.pojo.MenuExample" resultType="java.lang.Long">
-    select count(*) from menu
+  <select id="countByExample" parameterType="com.it.pojo.UserExample" resultType="java.lang.Long">
+    select count(*) from users
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-
-    <update id="updateByExampleSelective" parameterType="map">
-    update menu
+  <update id="updateByExampleSelective" parameterType="map">
+    update users
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.menu != null">
-        menu = #{record.menu,jdbcType=VARCHAR},
+      <if test="record.username != null">
+        username = #{record.username,jdbcType=VARCHAR},
       </if>
-      <if test="record.path != null">
-        path = #{record.path,jdbcType=VARCHAR},
+      <if test="record.password != null">
+        password = #{record.password,jdbcType=VARCHAR},
       </if>
-      <if test="record.parentid != null">
-        parentId = #{record.parentid,jdbcType=INTEGER},
+      <if test="record.idnumber != null">
+        IDnumber = #{record.idnumber,jdbcType=VARCHAR},
       </if>
-      <if test="record.icon != null">
-        icon = #{record.icon,jdbcType=VARCHAR},
+      <if test="record.phone != null">
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.createtime != null">
+        createTime = #{record.createtime,jdbcType=TIMESTAMP},
       </if>
     </set>
     <if test="_parameter != null">
@@ -173,47 +194,55 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update menu
+    update users
     set id = #{record.id,jdbcType=INTEGER},
-      menu = #{record.menu,jdbcType=VARCHAR},
-      path = #{record.path,jdbcType=VARCHAR},
-      parentId = #{record.parentid,jdbcType=INTEGER},
-      icon = #{record.icon,jdbcType=VARCHAR}
+      username = #{record.username,jdbcType=VARCHAR},
+      password = #{record.password,jdbcType=VARCHAR},
+      IDnumber = #{record.idnumber,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=INTEGER},
+      createTime = #{record.createtime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.it.pojo.Menu">
-    update menu
+  <update id="updateByPrimaryKeySelective" parameterType="com.it.pojo.User">
+    update users
     <set>
-      <if test="menu != null">
-        menu = #{menu,jdbcType=VARCHAR},
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
       </if>
-      <if test="path != null">
-        path = #{path,jdbcType=VARCHAR},
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
       </if>
-      <if test="parentid != null">
-        parentId = #{parentid,jdbcType=INTEGER},
+      <if test="idnumber != null">
+        IDnumber = #{idnumber,jdbcType=VARCHAR},
       </if>
-      <if test="icon != null">
-        icon = #{icon,jdbcType=VARCHAR},
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null">
+        createTime = #{createtime,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.it.pojo.Menu">
-    update menu
-    set menu = #{menu,jdbcType=VARCHAR},
-      path = #{path,jdbcType=VARCHAR},
-      parentId = #{parentid,jdbcType=INTEGER},
-      icon = #{icon,jdbcType=VARCHAR}
+  <update id="updateByPrimaryKey" parameterType="com.it.pojo.User">
+    update users
+    set username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      IDnumber = #{idnumber,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      createTime = #{createtime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
-<!--  List<Menu> queryMenuByRoleId(Integer id);-->
-  <select id="queryMenuByRoleId" resultType="com.it.pojo.Menu">
-    SELECT distinct menu.*
-    FROM role,menu,role_menu
-    WHERE role.`id`=role_menu.`role_id` AND menu.`id` = role_menu.`menu_id`
-    AND role.`id` = #{id}
+
+<!--  User queryUserByName(String username);-->
+  <select id="queryUserByName" resultType="com.it.pojo.User">
+    select * from user where username = #{username}
   </select>
 </mapper>
