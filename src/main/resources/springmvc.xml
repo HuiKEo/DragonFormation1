@@ -58,5 +58,6 @@
     <mvc:view-controller path="/" view-name="client_index"></mvc:view-controller>
     <mvc:view-controller path="fail.html" view-name="fail"></mvc:view-controller>
     <mvc:view-controller path="403.html" view-name="403"></mvc:view-controller>
+    <mvc:view-controller path="dispositionRegister.html" view-name="dispositionRegister"></mvc:view-controller>
 
 </beans>
