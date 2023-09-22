@@ -59,4 +59,6 @@
     <mvc:view-controller path="fail.html" view-name="fail"></mvc:view-controller>
     <mvc:view-controller path="403.html" view-name="403"></mvc:view-controller>
 
+    <mvc:view-controller path="user_list.html" view-name="user_list"></mvc:view-controller>
+
 </beans>
