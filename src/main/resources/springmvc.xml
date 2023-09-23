@@ -57,8 +57,11 @@
     <mvc:view-controller path="login.html" view-name="login"></mvc:view-controller>
     <mvc:view-controller path="/" view-name="client_index"></mvc:view-controller>
     <mvc:view-controller path="fail.html" view-name="fail"></mvc:view-controller>
-    <mvc:view-controller path="403.html" view-name="403"></mvc:view-controller>
-    <mvc:view-controller path="dispositionRegister.html" view-name="dispositionRegister"></mvc:view-controller>
+    <mvc:view-controller path="403.html" view-name="error/403"></mvc:view-controller>
+    <mvc:view-controller path="404.html" view-name="error/404"></mvc:view-controller>
+    <mvc:view-controller path="500.html" view-name="error/500"></mvc:view-controller>
+    <mvc:view-controller path="register_disposition.html" view-name="register_disposition"></mvc:view-controller>
+    <mvc:view-controller path="register.html" view-name="register"></mvc:view-controller>
 
     <mvc:view-controller path="user_list.html" view-name="user_list"></mvc:view-controller>
 
