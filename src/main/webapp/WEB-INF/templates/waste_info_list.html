@@ -87,7 +87,7 @@
         <!-- page heading start-->
         <div class="page-heading">
             <h3>
-                Dynamic Table
+                WASTE TABLE
             </h3>
         </div>
         <!-- page heading end-->
@@ -98,7 +98,7 @@
                 <div class="col-sm-12">
                     <section class="panel">
                         <header class="panel-heading">
-                            Dynamic Table
+                            WASTE TABLE
                             <span class="tools pull-right">
                 <a href="javascript:;" class="fa fa-chevron-down"></a>
              </span>
@@ -108,23 +108,37 @@
                                 <table class="display table table-bordered table-striped" id="dynamic-table">
                                     <thead>
                                     <tr>
-                                        <th>Rendering engine</th>
-                                        <th>Browser</th>
-                                        <th>Platform(s)</th>
-                                        <th class="hidden-phone">Engine version</th>
-                                        <th class="hidden-phone">CSS grade</th>
+                                        <th>id</th>
+                                        <th>Batch Code</th>
+                                        <th>Waste Name</th>
+                                        <th>Waste Category</th>
+                                        <th>Amount</th>
+                                        <th>measure</th>
+                                        <th>Source Enterprise</th>
+                                        <th>Source Workshop</th>
+                                        <th>Source Machine</th>
+                                        <th>Feature</th>
+                                        <th>Operator</th>
+                                        <th>Create Time</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr class="gradeX">
-                                        <td>Trident</td>
-                                        <td>Internet
-                                            Explorer 4.0
-                                        </td>
-                                        <td>Win 95+</td>
-                                        <td class="center hidden-phone">4</td>
-                                        <td class="center hidden-phone">X</td>
+
+                                    <tr class="gradeX" th:each="waste : ${all}">
+                                        <td th:text="${waste.id}"></td>
+                                        <td th:text="${waste.batchCode}"></td>
+                                        <td th:text="${waste.wasteName}"></td>
+                                        <td th:text="${waste.wasteCategory}"></td>
+                                        <td th:text="${waste.amount}"></td>
+                                        <td th:text="${waste.measure}"></td>
+                                        <td th:text="${waste.sourceEnterprise}"></td>
+                                        <td th:text="${waste.sourceWorkshop}"></td>
+                                        <td th:text="${waste.sourceMachine}"></td>
+                                        <td th:text="${waste.feature}"></td>
+                                        <td th:text="${waste.operator}"></td>
+                                        <td th:text="${waste.createTime}"></td>
                                     </tr>
+
                                     </tbody>
                                 </table>
                             </div>
@@ -137,7 +151,7 @@
 
         <!--footer section start-->
         <footer>
-            2014 &copy; AdminEx by ThemeBucket
+            2023 &copy; AdminEx by HuiKeo
         </footer>
         <!--footer section end-->
     </div>
