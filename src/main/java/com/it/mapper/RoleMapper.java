@@ -28,10 +28,5 @@ public interface RoleMapper {
 
     int updateByPrimaryKey(Role record);
 
-    /**
-     * 根据userid查询 对应角色
-     * @param id
-     * @return
-     */
     List<Role> queryRoleByUserId(Integer id);
 }

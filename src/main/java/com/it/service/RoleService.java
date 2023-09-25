@@ -1,5 +1,6 @@
 package com.it.service;
 
+import com.github.pagehelper.PageInfo;
 import com.it.pojo.Role;
 
 import java.util.List;
@@ -10,4 +11,9 @@ import java.util.List;
  */
 public interface RoleService {
 
+    /**
+     * 查询全部 分页
+     * @return
+     */
+    PageInfo<Role> queryAll(Integer pageNo);
 }

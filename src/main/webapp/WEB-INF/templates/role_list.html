@@ -20,10 +20,12 @@
     <link href="css/style-responsive.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-    <script src="js/html5shiv.js"></script>
-    <script src="js/respond.min.js"></script>
-    <![endif]-->
+    <script src="js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript">
+        function jumpPage(pageNo) {
+            window.location.href = "http://localhost:8080/waste_product/role/list?pageNo="+pageNo;
+        }
+    </script>
 </head>
 
 <body class="sticky-header">
@@ -108,27 +110,67 @@
                                 <table class="display table table-bordered table-striped" id="dynamic-table">
                                     <thead>
                                     <tr>
-                                        <th>Rendering engine</th>
-                                        <th>Browser</th>
-                                        <th>Platform(s)</th>
-                                        <th class="hidden-phone">Engine version</th>
-                                        <th class="hidden-phone">CSS grade</th>
+                                        <th>#</th>
+                                        <th>角色名称</th>
+                                        <th>备注</th>
+                                        <th>状态</th>
+                                        <th>创建时间</th>
+                                        <th>操作</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr class="gradeX">
-                                        <td>Trident</td>
-                                        <td>Internet
-                                            Explorer 4.0
+                                    <tr class="gradeX" th:each="role : ${rolePageInfo.list}">
+                                        <td th:text="${role.id}"></td>
+                                        <td th:text="${role.rolename}"></td>
+                                        <td th:text="${role.remark}">Win 95+</td>
+                                        <td>
+                                            <span th:if="${role.status == 1}" class="label label-success label-mini">AVAIL</span>
+                                            <span th:if="${role.status == 0}"
+                                                  class="label label-danger label-mini">N/A</span>
                                         </td>
-                                        <td>Win 95+</td>
-                                        <td class="center hidden-phone">4</td>
-                                        <td class="center hidden-phone">X</td>
+                                        <td th:text="${#dates.format(role.createTime,'yyyy-MM-dd HH:mm:ss')}">Win 95+
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-info" type="button" data-toggle="modal"
+                                                    href="#myModal1">授权
+                                            </button>
+                                            <button class="btn btn-danger" type="button">删除</button>
+                                        </td>
                                     </tr>
                                     </tbody>
                                 </table>
                             </div>
+                            <div>
+                                <div class="dataTables_paginate paging_bootstrap pagination">
+                                    <ul>
+                                        <li th:classappend=""><a th:style="${!rolePageInfo.hasPreviousPage} ? 'pointer-events: none;' : '' " href="javascript:void(0);" th:onclick="'jumpPage('+${rolePageInfo.pageNum - 1}+')'">上一页</a></li>
+                                        <li class="active"><a href="javascript:void(0);" th:text="${rolePageInfo.pageNum}"></a></li>
+                                        <li><a th:style="${!rolePageInfo.hasNextPage} ? 'pointer-events: none;' : '' " th:onclick="'jumpPage('+${rolePageInfo.pageNum + 1}+')'">下一页</a></li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                             aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                            &times;
+                                        </button>
+                                        <h4 class="modal-title">Datepicker in Modal</h4>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button data-dismiss="modal" class="btn btn-primary" type="button">Close
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- modal -->
                     </section>
                 </div>
             </div>
@@ -145,7 +187,6 @@
 </section>
 
 <!-- Placed js at the end of the document so the pages load faster -->
-<script src="js/jquery-1.10.2.min.js"></script>
 <script src="js/jquery-ui-1.9.2.custom.min.js"></script>
 <script src="js/jquery-migrate-1.2.1.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
@@ -156,7 +197,7 @@
 <script type="text/javascript" language="javascript" src="js/advanced-datatable/js/jquery.dataTables.js"></script>
 <script type="text/javascript" src="js/data-tables/DT_bootstrap.js"></script>
 <!--dynamic table initialization -->
-<script src="js/dynamic_table_init.js"></script>
+<!--<script src="js/dynamic_table_init.js"></script>-->
 
 <!--common scripts for all pages-->
 <script src="js/scripts.js"></script>
