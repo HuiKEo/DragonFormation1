@@ -46,7 +46,7 @@ public class LoginUserServiceImpl implements LoginUserService {
     List<SimpleGrantedAuthority> getAuthority(List<Role> roles){
         ArrayList<SimpleGrantedAuthority> list = new ArrayList<>();
         for (Role role : roles) {
-            list.add(new SimpleGrantedAuthority("ROLE_"+role.getRoleName()));
+            list.add(new SimpleGrantedAuthority("ROLE_"+role.getRolename()));
         }
         return list;
     }
