@@ -1,5 +1,7 @@
 package com.it.pojo;
 
+import java.util.Date;
+
 public class Menu {
     private Integer id;
 
@@ -10,6 +12,10 @@ public class Menu {
     private Integer parentid;
 
     private String icon;
+
+    private Date createTime;
+
+    private Integer isdeleted;
 
     public Integer getId() {
         return id;
@@ -51,14 +57,19 @@ public class Menu {
         this.icon = icon == null ? null : icon.trim();
     }
 
-    @Override
-    public String toString() {
-        return "Menu{" +
-                "id=" + id +
-                ", menu='" + menu + '\'' +
-                ", path='" + path + '\'' +
-                ", parentid=" + parentid +
-                ", icon='" + icon + '\'' +
-                '}';
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Integer getIsdeleted() {
+        return isdeleted;
+    }
+
+    public void setIsdeleted(Integer isdeleted) {
+        this.isdeleted = isdeleted;
     }
 }

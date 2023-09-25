@@ -1,6 +1,7 @@
 package com.it.pojo;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class MenuExample {
@@ -431,6 +432,126 @@ public class MenuExample {
 
         public Criteria andIconNotBetween(String value1, String value2) {
             addCriterion("icon not between", value1, value2, "icon");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeIsNull() {
+            addCriterion("create_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeIsNotNull() {
+            addCriterion("create_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeEqualTo(Date value) {
+            addCriterion("create_time =", value, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeNotEqualTo(Date value) {
+            addCriterion("create_time <>", value, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeGreaterThan(Date value) {
+            addCriterion("create_time >", value, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("create_time >=", value, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeLessThan(Date value) {
+            addCriterion("create_time <", value, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeLessThanOrEqualTo(Date value) {
+            addCriterion("create_time <=", value, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeIn(List<Date> values) {
+            addCriterion("create_time in", values, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeNotIn(List<Date> values) {
+            addCriterion("create_time not in", values, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeBetween(Date value1, Date value2) {
+            addCriterion("create_time between", value1, value2, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeNotBetween(Date value1, Date value2) {
+            addCriterion("create_time not between", value1, value2, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsdeletedIsNull() {
+            addCriterion("isdeleted is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsdeletedIsNotNull() {
+            addCriterion("isdeleted is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsdeletedEqualTo(Integer value) {
+            addCriterion("isdeleted =", value, "isdeleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsdeletedNotEqualTo(Integer value) {
+            addCriterion("isdeleted <>", value, "isdeleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsdeletedGreaterThan(Integer value) {
+            addCriterion("isdeleted >", value, "isdeleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsdeletedGreaterThanOrEqualTo(Integer value) {
+            addCriterion("isdeleted >=", value, "isdeleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsdeletedLessThan(Integer value) {
+            addCriterion("isdeleted <", value, "isdeleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsdeletedLessThanOrEqualTo(Integer value) {
+            addCriterion("isdeleted <=", value, "isdeleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsdeletedIn(List<Integer> values) {
+            addCriterion("isdeleted in", values, "isdeleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsdeletedNotIn(List<Integer> values) {
+            addCriterion("isdeleted not in", values, "isdeleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsdeletedBetween(Integer value1, Integer value2) {
+            addCriterion("isdeleted between", value1, value2, "isdeleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsdeletedNotBetween(Integer value1, Integer value2) {
+            addCriterion("isdeleted not between", value1, value2, "isdeleted");
             return (Criteria) this;
         }
     }

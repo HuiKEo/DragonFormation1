@@ -2,6 +2,8 @@ package com.it.mapper;
 
 import com.it.pojo.Menu;
 import com.it.pojo.MenuExample;
+
+import java.util.Collection;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
