@@ -224,8 +224,8 @@
                 and waste_name = #{wasteName}
             </if>
 #             类别
-            <if test="wasteCategory!=null and wasteCategory!=''">
-                and waste_category = #{wasteCategory}
+            <if test="feature!=null and feature!=''">
+                and feature = #{feature}
             </if>
 #             废物来源（企业）
             <if test="sourceEnterprise!=null and sourceEnterprise!=''">
@@ -239,7 +239,7 @@
             <if test="sourceMachine!=null and sourceMachine!=''">
                 and source_machine = #{sourceMachine}
             </if>
-#             废物来源（机器）
+#             经办人
             <if test="operator!=null and operator!=''">
                 and operator = #{operator}
             </if>

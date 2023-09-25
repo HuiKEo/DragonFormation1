@@ -23,8 +23,19 @@ public class WasteInfoController {
     @RequestMapping("/list")
     public String findWasteAll(WasteInfo wasteInfo, HttpServletRequest request,
                                @RequestParam(defaultValue ="1") int pageNum){
-
         PageHelper.startPage(pageNum, PageSize.PAGESIZE);
+        String name = request.getParameter("name");
+        String feature = request.getParameter("feature");
+        String enterprise = request.getParameter("enterprise");
+        String workshop = request.getParameter("workshop");
+        String machine = request.getParameter("machine");
+        String operator = request.getParameter("operator");
+        wasteInfo.setWasteName(name);
+        wasteInfo.setFeature(feature);
+        wasteInfo.setSourceEnterprise(enterprise);
+        wasteInfo.setSourceWorkshop(workshop);
+        wasteInfo.setSourceMachine(machine);
+        wasteInfo.setOperator(operator);
         List<WasteInfo> all = this.wasteInfoService.findAll(wasteInfo);
         PageInfo<WasteInfo> pageInfo =new PageInfo<>(all);
         request.setAttribute("pageInfo",pageInfo);
