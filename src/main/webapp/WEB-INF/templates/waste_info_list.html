@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
->
+<!--suppress ThymeleafVariablesResolveInspection -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <base th:href="@{/}">
 <head>
     <meta charset="utf-8">
@@ -12,9 +12,9 @@
     <title>Dynamic Table</title>
 
     <!--dynamic table-->
-    <link href="js/advanced-datatable/css/demo_page.css" rel="stylesheet"/>
-    <link href="js/advanced-datatable/css/demo_table.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="js/data-tables/DT_bootstrap.css"/>
+    <link href="js/advanced-datatable/css/demo_page.css" rel="stylesheet">
+    <link href="js/advanced-datatable/css/demo_table.css" rel="stylesheet">
+    <link rel="stylesheet" href="js/data-tables/DT_bootstrap.css">
 
     <link href="css/style.css" rel="stylesheet">
     <link href="css/style-responsive.css" rel="stylesheet">
@@ -105,6 +105,28 @@
                         </header>
                         <div class="panel-body">
                             <div class="adv-table">
+                                <form th:action="@{waste_info/list}" method="post">
+                                    <label>
+                                        <input type="text" name="name" id="name" placeholder="请输入废料名称" th:value="${param.name}">
+                                    </label>
+                                    <label>
+                                        <input type="text" name="feature" id="feature" placeholder="请输入废料特性" th:value="${param.feature}">
+                                    </label>
+                                    <label>
+                                        <input type="text" name="enterprise" id="enterprise" placeholder="请输入废料企业来源" th:value="${param.enterprise}">
+                                    </label>
+                                    <label>
+                                        <input type="text" name="workshop" id="workshop" placeholder="请输入废料车间来源" th:value="${param.workshop}">
+                                    </label>
+                                    <label>
+                                        <input type="text" name="machine" id="machine" placeholder="请输入废料机器来源" th:value="${param.machine}">
+                                    </label>
+                                    <label>
+                                        <input type="text" name="operator" id="operator" placeholder="请输入经办人" th:value="${param.operator}">
+                                    </label>
+                                    <input type="submit" class="btn btn-success btn-sm" value="搜索">
+                                    <input type="button" class="btn btn-info btn-sm" value="重置" onclick="backData()">
+                                </form>
                                 <table class="display table table-bordered table-striped" id="dynamic-table">
                                     <thead>
                                     <tr>
@@ -139,8 +161,8 @@
                                         <td th:text="${waste.operator}"></td>
                                         <td th:text="${waste.createTime}"></td>
                                         <td>
-                                            <button style="background-color: #a5d24a">修改</button>
-                                            <button style="background-color: red">删除</button>
+                                            <button class="btn btn-warning btn-sm" >修改</button>
+                                            <button class="btn btn-danger btn-sm" >删除</button>
                                         </td>
                                     </tr>
 
@@ -157,7 +179,7 @@
 
         <!--footer section start-->
         <footer>
-            2023 &copy; AdminEx by HuiKeo
+            2023 © AdminEx by HuiKeo
         </footer>
         <!--footer section end-->
     </div>
@@ -172,6 +194,16 @@
 <script src="js/modernizr.min.js"></script>
 <script src="js/jquery.nicescroll.js"></script>
 
+<script type="text/javascript">
+    function backData() {
+        document.getElementById("name").value="";
+        document.getElementById("feature").value="";
+        document.getElementById("enterprise").value="";
+        document.getElementById("workshop").value="";
+        document.getElementById("machine").value="";
+        document.getElementById("operator").value="";
+    }
+</script>
 <!--&lt;!&ndash;dynamic table&ndash;&gt;-->
 <!--<script type="text/javascript" language="javascript" src="js/advanced-datatable/js/jquery.dataTables.js"></script>-->
 <!--<script type="text/javascript" src="js/data-tables/DT_bootstrap.js"></script>-->

@@ -219,29 +219,29 @@
         select * from waste_info
         <where>
             and 1=1
-#             名称
+            <!--名称-->
             <if test="wasteName!=null and wasteName!=''">
-                and waste_name = #{wasteName}
+                and waste_name like concat('%', #{wasteName}, '%')
             </if>
-#             类别
-            <if test="wasteCategory!=null and wasteCategory!=''">
-                and waste_category = #{wasteCategory}
+            <!--类别-->
+            <if test="feature!=null and feature!=''">
+                and feature like concat('%', #{feature}, '%')
             </if>
-#             废物来源（企业）
+            <!--废物来源（企业）-->
             <if test="sourceEnterprise!=null and sourceEnterprise!=''">
-                and source_enterprise = #{sourceEnterprise}
+                and source_enterprise like concat('%', #{sourceEnterprise}, '%')
             </if>
-#             废物来源（车间）
+            <!--废物来源（车间）-->
             <if test="sourceWorkshop!=null and sourceWorkshop!=''">
-                and source_workshop = #{sourceWorkshop}
+                and source_workshop like concat('%', #{sourceWorkshop}, '%')
             </if>
-#             废物来源（机器）
+            <!--废物来源（机器）-->
             <if test="sourceMachine!=null and sourceMachine!=''">
-                and source_machine = #{sourceMachine}
+                and source_machine like concat('%', #{sourceMachine}, '%')
             </if>
-#             废物来源（机器）
+            <!--经办人-->
             <if test="operator!=null and operator!=''">
-                and operator = #{operator}
+                and operator like concat('%', #{operator}, '%')
             </if>
         </where>
     </select>
@@ -368,5 +368,17 @@
             create_time       = #{createTime,jdbcType=TIMESTAMP},
             isdeleted         = #{isdeleted,jdbcType=INTEGER}
         where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateWasteInfo">
+        update waste_info
+        <set>
+            <if test="wasteName!=null and wasteName!=''">
+                waste_name = ${wasteName},
+            </if>
+            <if test="amount!=null and amount!=''">
+                amount = ${amount},
+            </if>
+        </set>
+        where id=#{id}
     </update>
 </mapper>
