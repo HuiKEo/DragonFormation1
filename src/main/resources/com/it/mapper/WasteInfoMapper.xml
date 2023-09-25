@@ -369,4 +369,16 @@
             isdeleted         = #{isdeleted,jdbcType=INTEGER}
         where id = #{id,jdbcType=INTEGER}
     </update>
+    <update id="updateWasteInfo">
+        update waste_info
+        <set>
+            <if test="wasteName!=null and wasteName!=''">
+                waste_name = ${wasteName},
+            </if>
+            <if test="amount!=null and amount!=''">
+                amount = ${amount},
+            </if>
+        </set>
+        where id=#{id}
+    </update>
 </mapper>
