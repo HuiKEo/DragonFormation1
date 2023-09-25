@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+>
 <base th:href="@{/}">
 <head>
     <meta charset="utf-8">
@@ -120,11 +120,12 @@
                                         <th>Feature</th>
                                         <th>Operator</th>
                                         <th>Create Time</th>
+                                        <th>OPERATE</th>
                                     </tr>
                                     </thead>
                                     <tbody>
 
-                                    <tr class="gradeX" th:each="waste : ${all}">
+                                    <tr class="gradeX" th:each="waste : ${pageInfo.list}">
                                         <td th:text="${waste.id}"></td>
                                         <td th:text="${waste.batchCode}"></td>
                                         <td th:text="${waste.wasteName}"></td>
@@ -137,6 +138,10 @@
                                         <td th:text="${waste.feature}"></td>
                                         <td th:text="${waste.operator}"></td>
                                         <td th:text="${waste.createTime}"></td>
+                                        <td>
+                                            <button style="background-color: #a5d24a">修改</button>
+                                            <button style="background-color: red">删除</button>
+                                        </td>
                                     </tr>
 
                                     </tbody>
@@ -147,6 +152,7 @@
                 </div>
             </div>
         </div>
+
         <!--body wrapper end-->
 
         <!--footer section start-->
@@ -166,11 +172,11 @@
 <script src="js/modernizr.min.js"></script>
 <script src="js/jquery.nicescroll.js"></script>
 
-<!--dynamic table-->
-<script type="text/javascript" language="javascript" src="js/advanced-datatable/js/jquery.dataTables.js"></script>
-<script type="text/javascript" src="js/data-tables/DT_bootstrap.js"></script>
-<!--dynamic table initialization -->
-<script src="js/dynamic_table_init.js"></script>
+<!--&lt;!&ndash;dynamic table&ndash;&gt;-->
+<!--<script type="text/javascript" language="javascript" src="js/advanced-datatable/js/jquery.dataTables.js"></script>-->
+<!--<script type="text/javascript" src="js/data-tables/DT_bootstrap.js"></script>-->
+<!--&lt;!&ndash;dynamic table initialization &ndash;&gt;-->
+<!--<script src="js/dynamic_table_init.js"></script>-->
 
 <!--common scripts for all pages-->
 <script src="js/scripts.js"></script>
