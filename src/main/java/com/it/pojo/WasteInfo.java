@@ -31,7 +31,7 @@ public class WasteInfo {
 
     private Date createTime;
 
-    private Integer isdeleted;
+    private Integer isDeleted;
 
     public Integer getId() {
         return id;
@@ -129,11 +129,11 @@ public class WasteInfo {
         this.createTime = createTime;
     }
 
-    public Integer getIsdeleted() {
-        return isdeleted;
+    public Integer getIsDeleted() {
+        return isDeleted;
     }
 
-    public void setIsdeleted(Integer isdeleted) {
-        this.isdeleted = isdeleted;
+    public void setIsDeleted(Integer isDeleted) {
+        this.isDeleted = isDeleted;
     }
 }

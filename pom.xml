@@ -172,6 +172,18 @@
             <version>3.0.2.RELEASE</version>
         </dependency>
 
+        <!--        hutool数据报表导出-->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>5.8.16</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>4.1.2</version>
+        </dependency>
+
     </dependencies>
 
 
