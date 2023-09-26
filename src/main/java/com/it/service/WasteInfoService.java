@@ -11,4 +11,6 @@ public interface WasteInfoService {
     WasteInfo findOne(int id);
 
     int updateInfo(WasteInfo wasteInfo);
+
+    int insertInfo(WasteInfo wasteInfo);
 }

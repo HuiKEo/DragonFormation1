@@ -48,6 +48,41 @@ public class WasteInfoController {
         return "waste_info_list";
     }
 
+    @RequestMapping("/insert")
+    public String insertHTML(){
+        return "waste_info_insert";
+    }
+
+    @RequestMapping("/insertWaste")
+    public String insertWaste(HttpServletRequest request,WasteInfo w,
+                              @RequestParam("batch_code") String batch_code,
+                              @RequestParam("waste_name") String waste_name,
+                              @RequestParam("amount") String amount,
+                              @RequestParam("measure") String measure,
+                              @RequestParam("source_enterprise") String source_enterprise,
+                              @RequestParam("source_workshop") String source_workshop,
+                              @RequestParam("source_machine") String source_machine,
+                              @RequestParam("feature") String feature,
+                              @RequestParam("operator") String operator){
+        w.setBatchCode(batch_code);
+        w.setWasteName(waste_name);
+        w.setAmount(amount);
+        w.setMeasure(measure);
+        w.setSourceEnterprise(source_enterprise);
+        w.setSourceWorkshop(source_workshop);
+        w.setSourceMachine(source_machine);
+        w.setFeature(feature);
+        w.setOperator(operator);
+        int i = this.wasteInfoService.insertInfo(w);
+        if (i > 0){
+            WasteInfo wasteInfo1 = new WasteInfo();
+            findWasteAll(wasteInfo1,request,1);
+            return "waste_info_list";
+        }else {
+            return "error/403";
+        }
+    }
+
     @RequestMapping("/data")
     public String findOne(HttpServletRequest request,@RequestParam("id") int id){
         WasteInfo one = this.wasteInfoService.findOne(id);
@@ -56,14 +91,14 @@ public class WasteInfoController {
     }
 
     @PostMapping("/update")
-    public String updateInfo(HttpServletRequest request,WasteInfo wasteInfo){
-        String code = request.getParameter("code");
-        String id = request.getParameter("id");
-        String name = request.getParameter("name");
-        String amount = request.getParameter("amount");
-        String measure = request.getParameter("measure");
-        String operator = request.getParameter("operator");
-        wasteInfo.setId(Integer.valueOf(id));
+    public String updateInfo(HttpServletRequest request,WasteInfo wasteInfo,
+                             @RequestParam("code") String code,
+                             @RequestParam("id") Integer id,
+                             @RequestParam("name") String name,
+                             @RequestParam("amount") String amount,
+                             @RequestParam("measure") String measure,
+                             @RequestParam("operator") String operator){
+        wasteInfo.setId(id);
         wasteInfo.setBatchCode(code);
         wasteInfo.setWasteName(name);
         wasteInfo.setAmount(amount);

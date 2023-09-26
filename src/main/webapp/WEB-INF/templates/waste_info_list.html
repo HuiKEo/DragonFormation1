@@ -130,9 +130,11 @@
                                         <input type="text" name="aoperator" id="operator" placeholder="请输入经办人"
                                                th:value="${param.aoperator}">
                                     </label>
+                                    <br>
                                     <input type="submit" class="btn btn-success btn-sm" value="搜索">
                                     <input type="button" class="btn btn-info btn-sm" value="重置" onclick="backData()">
                                     <input type="button" class="btn btn-default btn-sm" value="导出" onclick="waste_export()">
+                                    <input type="button" class="btn btn-success btn-sm" value="新增" onclick="insert_export()">
                                 </form>
                                 <table class="display table table-bordered table-striped" id="dynamic-table">
                                     <thead>
@@ -220,6 +222,10 @@
     function delete_waste(id) {
         location.href="http://localhost:8080/waste_product/waste_info/delete?id="+id;
     }
+    function insert_export() {
+        location.href="http://localhost:8080/waste_product/waste_info/insert"
+    }
+
     function waste_export() {
         location.href="http://localhost:8080/waste_product/waste_info/export"
     }

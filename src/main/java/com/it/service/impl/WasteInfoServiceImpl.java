@@ -29,4 +29,9 @@ public class WasteInfoServiceImpl implements WasteInfoService {
     public int updateInfo(WasteInfo wasteInfo) {
         return this.wasteInfoMapper.updateWasteInfo(wasteInfo);
     }
+
+    @Override
+    public int insertInfo(WasteInfo wasteInfo) {
+        return this.wasteInfoMapper.insertWaste(wasteInfo);
+    }
 }

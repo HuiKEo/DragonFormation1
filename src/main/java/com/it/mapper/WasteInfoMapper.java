@@ -33,4 +33,6 @@ public interface WasteInfoMapper {
     WasteInfo findOne(int id);
 
     int updateWasteInfo(WasteInfo wasteInfo);
+
+    int insertWaste(WasteInfo wasteInfo);
 }

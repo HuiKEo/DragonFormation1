@@ -209,6 +209,67 @@
             </if>
         </trim>
     </insert>
+    <insert id="insertWaste">
+        insert into waste_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="batchCode != null">
+                batch_code,
+            </if>
+            <if test="wasteName != null">
+                waste_name,
+            </if>
+            <if test="amount != null">
+                amount,
+            </if>
+            <if test="measure != null">
+                measure,
+            </if>
+            <if test="sourceEnterprise != null">
+                source_enterprise,
+            </if>
+            <if test="sourceWorkshop != null">
+                source_workshop,
+            </if>
+            <if test="sourceMachine != null">
+                source_machine,
+            </if>
+            <if test="feature != null">
+                feature,
+            </if>
+            <if test="operator != null">
+                operator,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="batchCode != null">
+                #{batchCode,jdbcType=VARCHAR},
+            </if>
+            <if test="wasteName != null">
+                #{wasteName,jdbcType=VARCHAR},
+            </if>
+            <if test="amount != null">
+                #{amount,jdbcType=VARCHAR},
+            </if>
+            <if test="measure != null">
+                #{measure,jdbcType=VARCHAR},
+            </if>
+            <if test="sourceEnterprise != null">
+                #{sourceEnterprise,jdbcType=VARCHAR},
+            </if>
+            <if test="sourceWorkshop != null">
+                #{sourceWorkshop,jdbcType=VARCHAR},
+            </if>
+            <if test="sourceMachine != null">
+                #{sourceMachine,jdbcType=VARCHAR},
+            </if>
+            <if test="feature != null">
+                #{feature,jdbcType=VARCHAR},
+            </if>
+            <if test="operator != null">
+                #{operator,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
     <select id="countByExample" parameterType="com.it.pojo.WasteInfoExample" resultType="java.lang.Long">
         select count(*) from waste_info
         <if test="_parameter != null">
