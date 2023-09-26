@@ -66,11 +66,11 @@
         }
 
         //删除
-        function deleteInfo(id, name) {
-            if (confirm("确定删除【" + name + "】")) {
+        function deleteInfo(id) {
+            if (confirm("确定删除数据吗？")) {
                 $.ajax({
                     type: "DELETE",
-                    url: "disposition/deletedisposition/" + id,
+                    url: "driver/deletedriver/" + id,
                     success: function () {
                         //刷新
                         location.reload();
@@ -81,24 +81,26 @@
 
         //修改
         function updateInfo(id) {
-            // window.location.href = "disposition/toUpdate/" + id;
             $.ajax({
                 type: "get",
-                url: "disposition/toUpdate/" + id,
+                url: "driver/toUpdate/" + id,
                 success: function (data) {
-                    var str = '';
                     $("#id").val(data.id)
-                    $("#name").val(data.name)
-                    $("#licence").val(data.licence)
-                    $("#status").val(data.status)
-                    if(parseInt(data.status) === 0){
-                        str += "<option value='0' selected>待审核</option><option value='1'>已审核</option>"
-                    }
-                    if(parseInt(data.status) === 1){
-                        str += "<option value='0'>待审核</option><option value='1' selected>已审核</option>"
-                    }
-                    $("#status").html(str);
+                    $("#licensePlate").val(data.licensePlate)
+                    $("#type").val(data.type)
+                    $("#capacity").val(data.capacity)
+
                 }
+            })
+        }
+
+        //添加
+        function addInfo() {
+            $("#addInfoBtn").bind("click",function (){
+                if(confirm("确认提交？")){
+                    $("#infoForm1").submit();
+                }
+
             })
         }
 
@@ -183,67 +185,81 @@
         <div class="wrapper">
             <div class="row">
                 <form class="col-sm-12 form-inline" role="form" id="selectForm"
-                      th:action="@{/disposition/dispositionList}"
+                      th:action="@{/driver/driverList}"
                       method="get">
                     <input type="hidden" id="pageNo" name="pageNo" value="1">
                     <div class="form-group">
-                        <label class=" control-label">单位名称:</label>
-                        <input type="text" class="form-control" placeholder="单位名称" name="name" th:value="${param.name}">
+                        <label class=" control-label">车牌:</label>
+                        <input type="text" class="form-control" placeholder="车牌" name="licensePlate" th:value="${param.licensePlate}">
                     </div>
                     <div class="form-group">
-                        <label class=" control-label">许可证编码:</label>
-                        <input type="text" class="form-control" placeholder="许可证编码" name="licence"
-                               th:value="${param.licence}">
+                        <label class=" control-label">车辆类型:</label>
+                        <input type="text" class="form-control" placeholder="车辆类型" name="type"
+                               th:value="${param.type}">
+                    </div>
+                    <div class="form-group">
+                        <label class=" control-label">车辆最小容量:</label>
+                        <input type="text" class="form-control" placeholder="车辆最小容量" name="minCapacity"
+                               th:value="${param.minCapacity}">
+                    </div>
+
+                    <div class="form-group">
+                        <label class=" control-label">车辆最大容量:</label>
+                        <input type="text" class="form-control" placeholder="车辆最大容量" name="maxCapacity"
+                               th:value="${param.maxCapacity}">
                     </div>
                     <div class="form-group">
                         <label class="control-label">最小日期:</label>
-                        <input type="date" class="form-control" placeholder="最小日期" name="minTime"
-                               th:value="${param.minTime}">
+                        <input type="date" class="form-control" placeholder="最小日期" name="minCreateTime"
+                               th:value="${param.minCreateTime}">
                     </div>
                     <div class="form-group">
                         <label class="control-label">最大日期:</label>
-                        <input type="date" class="form-control" placeholder="最大日期" name="maxTime"
-                               th:value="${param.maxTime}">
+                        <input type="date" class="form-control" placeholder="最大日期" name="maxCreateTime"
+                               th:value="${param.maxCreateTime}">
                     </div>
                     <button type="submit" class="btn btn-primary" id="selectFormSubBtn">查询</button>
                 </form>
                 <div class="col-sm-12">
                     <section class="panel">
                         <header class="panel-heading">
-                            处置厂商注册信息
+                            车辆基本信息
                             <span class="tools pull-right">
                 <a href="javascript:;" class="fa fa-chevron-down"></a>
              </span>
                         </header>
                         <div class="panel-body">
+                            <button class="btn btn-warning" id="addBtn" type="button"     data-toggle="modal" href="#addModal"
+                                    th:onclick="'addInfo()'">添加</button>
                             <div class="adv-table">
                                 <table class="display table table-bordered table-striped" id="dynamic-table">
                                     <thead>
                                     <tr>
                                         <th>编号</th>
-                                        <th>单位名称</th>
-                                        <th>许可证编码</th>
-                                        <th class="hidden-phone">状态（0待审核 1已审核）</th>
+                                        <th>车牌</th>
+                                        <th>车辆类型</th>
+                                        <th class="hidden-phone">车辆容量</th>
+                                        <th class="hidden-phone">计数单位</th>
                                         <th class="hidden-phone">创建时间</th>
                                         <th class="hidden-phone">操作</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr th:each="disposition : ${pageInfo.list}" >
-                                        <td th:text="${disposition.id}"></td>
-                                        <td th:text="${disposition.name}"></td>
-                                        <td th:text="${disposition.licence}"></td>
-                                        <td th:text="${disposition.status}==1?'已审核':'未审核'"></td>
-                                        <td th:text="${#dates.format(disposition.createTime, 'yyyy-MM-dd HH:MM')}"></td>
+                                    <tr th:each="driver : ${pageInfo.list}" >
+                                        <td th:text="${driver.id}"></td>
+                                        <td th:text="${driver.licensePlate}"></td>
+                                        <td th:text="${driver.type}"></td>
+                                        <td th:text="${driver.capacity}"></td>
+                                        <td th:text="${driver.measure}"></td>
+                                        <td th:text="${#dates.format(driver.createTime, 'yyyy-MM-dd HH:MM')}"></td>
                                         <td>
                                             <button type="button" class="layui-btn btn btn-info" data-toggle="modal"
                                                     href="#updateModal"
-                                                    th:onclick="'updateInfo('+${disposition.id}+')'">修改
+                                                    th:onclick="'updateInfo('+${driver.id}+')'">修改
                                             </button>
                                             <button type="button" class="layui-btn btn btn-danger"
-                                                    th:data-infoId="${disposition.id}"
-                                                    th:data-infoTitle="${disposition.name}"
-                                                    th:onclick="deleteInfo([[${disposition.id}]],[[${disposition.name}]])">
+                                                    th:data-infoId="${driver.id}"
+                                                    th:onclick="deleteInfo([[${driver.id}]])">
                                                 删除
                                             </button>
                                         </td>
@@ -280,7 +296,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- Modal -->
+                        <!-- Modal  修改-->
                         <div class="modal fade" id="updateModal" tabindex="-1" role="dialog"
                              aria-labelledby="myModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
@@ -292,40 +308,96 @@
                                         <h4 class="modal-title">Datepicker in Modal</h4>
                                     </div>
                                     <div class="modal-body">
-                                        <form id="infoForm" class="form-horizontal " th:action="@{/disposition/update}"
+                                        <form id="infoForm" class="form-horizontal " th:action="@{/driver/update}"
                                               method="post">
                                             <input type="hidden" name="_method" th:value="PUT">
                                             <input type="hidden" name="id" id="id" >
                                             <div class="form-group">
-                                                <label class="control-label col-md-4"> 单位名称</label>
+                                                <label class="control-label col-md-4"> 车牌</label>
                                                 <div class="col-md-6">
-                                                    <input size="16" type="text" id="name" name="name"
+                                                    <input size="16" type="text" id="licensePlate" name="licensePlate"
                                                            class="form_datetime form-control">
                                                 </div>
                                             </div>
 
                                             <div class="form-group">
-                                                <label class="control-label col-md-4"> 许可证编码</label>
+                                                <label class="control-label col-md-4"> 车辆类型</label>
                                                 <div class="col-md-6">
-                                                    <input size="16" type="text" id="licence" name="licence"
+                                                    <input size="16" type="text" id="type" name="type"
                                                            class="form_datetime form-control">
                                                 </div>
                                             </div>
-
                                             <div class="form-group">
-                                                <label class="control-label col-md-4"> 审核状态</label>
+                                                <label class="control-label col-md-4"> 车辆容量</label>
                                                 <div class="col-md-6">
-                                                    <select class="form-control m-bot15 col-md-6" id="status" name="status">
-
-                                                    </select>
-                                                <!--    <input size="16" type="text" name="status"
-                                                           class="form_datetime form-control">-->
+                                                    <input size="16" type="text" id="capacity" name="capacity"
+                                                           class="form_datetime form-control">
                                                 </div>
                                             </div>
-
                                             <div class="modal-footer">
                                                 <button data-dismiss="modal" class="btn btn-primary" id="updateInfoBtn"
                                                         type="button">修改
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button data-dismiss="modal" class="btn btn-primary" type="button">Close
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- modal -->
+
+                        <!-- Modal  添加-->
+                        <div class="modal fade" id="addModal" tabindex="-1" role="dialog"
+                             aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                            &times;
+                                        </button>
+                                        <h4 class="modal-title">Datepicker in Modal</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="infoForm1" class="form-horizontal " th:action="@{/driver/add}"
+                                              method="post">
+                                            <input type="hidden" name="_method" th:value="PUT">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4"> 车牌</label>
+                                                <div class="col-md-6">
+                                                    <input size="16" type="text" id="licensePlate1" name="licensePlate"
+                                                           class="form_datetime form-control">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4"> 车辆类型</label>
+                                                <div class="col-md-6">
+                                                    <input size="16" type="text" id="type1" name="type"
+                                                           class="form_datetime form-control">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4"> 车辆容量</label>
+                                                <div class="col-md-6">
+                                                    <input size="16" type="text" id="capacity1" name="capacity"
+                                                           class="form_datetime form-control">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4"> 容量单位</label>
+                                                <div class="col-md-6">
+                                                    <input size="16" type="text" id="measure" name="measure"
+                                                           class="form_datetime form-control">
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button data-dismiss="modal" class="btn btn-primary" id="addInfoBtn"
+                                                        type="button">添加
                                                 </button>
                                             </div>
                                         </form>

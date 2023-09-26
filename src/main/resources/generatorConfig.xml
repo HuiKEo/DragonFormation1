@@ -35,6 +35,6 @@
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
         <!-- 指定每个表对应的java类型 -->
-        <table tableName="waste_output" domainObjectName="WasteOutput"></table>
+        <table tableName="driver" domainObjectName="Driver"></table>
     </context>
 </generatorConfiguration>
