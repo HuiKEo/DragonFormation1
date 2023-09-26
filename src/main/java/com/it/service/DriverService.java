@@ -21,4 +21,8 @@ public interface DriverService {
 
     //删除车辆信息（逻辑删除）
     void deleteDriverInfo(Driver driver);
+
+
+    //添加车辆信息
+    void addDriverInfo(Driver driver);
 }

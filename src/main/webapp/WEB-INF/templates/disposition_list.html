@@ -234,7 +234,7 @@
                                         <td th:text="${disposition.name}"></td>
                                         <td th:text="${disposition.licence}"></td>
                                         <td th:text="${disposition.status}==1?'已审核':'未审核'"></td>
-                                        <td th:text="${#dates.format(disposition.createTime, 'yyyy-MM-dd HH:mm')}"></td>
+                                        <td th:text="${#dates.format(disposition.createTime, 'yyyy-MM-dd HH:MM')}"></td>
                                         <td>
                                             <button type="button" class="layui-btn btn btn-info" data-toggle="modal"
                                                     href="#updateModal"

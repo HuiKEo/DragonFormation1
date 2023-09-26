@@ -67,4 +67,10 @@ public class DriverServiceImpl implements DriverService {
     public void deleteDriverInfo(Driver driver) {
         driverMapper.updateByPrimaryKeySelective(driver);
     }
+
+    @Override
+    public void addDriverInfo(Driver driver) {
+
+        driverMapper.insertSelective(driver);
+    }
 }

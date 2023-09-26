@@ -54,4 +54,13 @@ public class DriverController {
         driverService.deleteDriverInfo(driver);
         return "redirect:/driver/driverList";
     }
+
+
+    //添加
+    @RequestMapping(value = "/add",method = RequestMethod.PUT)
+    public String addInfo(Driver driver,
+                             HttpServletRequest request){
+        driverService.addDriverInfo(driver);
+        return "redirect:/driver/driverList";
+    }
 }

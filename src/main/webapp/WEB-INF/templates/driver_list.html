@@ -94,6 +94,16 @@
             })
         }
 
+        //添加
+        function addInfo() {
+            $("#addInfoBtn").bind("click",function (){
+                if(confirm("确认提交？")){
+                    $("#infoForm1").submit();
+                }
+
+            })
+        }
+
             $(function (){
             $("#updateInfoBtn").bind("click",function (){
                 if(confirm("确认提交？")){
@@ -219,6 +229,8 @@
              </span>
                         </header>
                         <div class="panel-body">
+                            <button class="btn btn-warning" id="addBtn" type="button"     data-toggle="modal" href="#addModal"
+                                    th:onclick="'addInfo()'">添加</button>
                             <div class="adv-table">
                                 <table class="display table table-bordered table-striped" id="dynamic-table">
                                     <thead>
@@ -239,7 +251,7 @@
                                         <td th:text="${driver.type}"></td>
                                         <td th:text="${driver.capacity}"></td>
                                         <td th:text="${driver.measure}"></td>
-                                        <td th:text="${#dates.format(driver.createTime, 'yyyy-MM-dd HH:mm')}"></td>
+                                        <td th:text="${#dates.format(driver.createTime, 'yyyy-MM-dd HH:MM')}"></td>
                                         <td>
                                             <button type="button" class="layui-btn btn btn-info" data-toggle="modal"
                                                     href="#updateModal"
@@ -284,7 +296,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- Modal -->
+                        <!-- Modal  修改-->
                         <div class="modal fade" id="updateModal" tabindex="-1" role="dialog"
                              aria-labelledby="myModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
@@ -325,6 +337,67 @@
                                             <div class="modal-footer">
                                                 <button data-dismiss="modal" class="btn btn-primary" id="updateInfoBtn"
                                                         type="button">修改
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button data-dismiss="modal" class="btn btn-primary" type="button">Close
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- modal -->
+
+                        <!-- Modal  添加-->
+                        <div class="modal fade" id="addModal" tabindex="-1" role="dialog"
+                             aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                            &times;
+                                        </button>
+                                        <h4 class="modal-title">Datepicker in Modal</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="infoForm1" class="form-horizontal " th:action="@{/driver/add}"
+                                              method="post">
+                                            <input type="hidden" name="_method" th:value="PUT">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4"> 车牌</label>
+                                                <div class="col-md-6">
+                                                    <input size="16" type="text" id="licensePlate1" name="licensePlate"
+                                                           class="form_datetime form-control">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4"> 车辆类型</label>
+                                                <div class="col-md-6">
+                                                    <input size="16" type="text" id="type1" name="type"
+                                                           class="form_datetime form-control">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4"> 车辆容量</label>
+                                                <div class="col-md-6">
+                                                    <input size="16" type="text" id="capacity1" name="capacity"
+                                                           class="form_datetime form-control">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4"> 容量单位</label>
+                                                <div class="col-md-6">
+                                                    <input size="16" type="text" id="measure" name="measure"
+                                                           class="form_datetime form-control">
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button data-dismiss="modal" class="btn btn-primary" id="addInfoBtn"
+                                                        type="button">添加
                                                 </button>
                                             </div>
                                         </form>
