@@ -19,4 +19,14 @@ public class WasteInfoServiceImpl implements WasteInfoService {
     public List<WasteInfo> findAll(WasteInfo wasteInfo) {
         return this.wasteInfoMapper.findAll(wasteInfo);
     }
+
+    @Override
+    public WasteInfo findOne(int id) {
+        return this.wasteInfoMapper.findOne(id);
+    }
+
+    @Override
+    public int updateInfo(WasteInfo wasteInfo) {
+        return this.wasteInfoMapper.updateWasteInfo(wasteInfo);
+    }
 }

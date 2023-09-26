@@ -14,7 +14,7 @@
         <result column="feature" jdbcType="VARCHAR" property="feature"/>
         <result column="operator" jdbcType="VARCHAR" property="operator"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
-        <result column="isdeleted" jdbcType="INTEGER" property="isdeleted"/>
+        <result column="isdeleted" jdbcType="INTEGER" property="isDeleted"/>
     </resultMap>
     <sql id="Example_Where_Clause">
         <where>
@@ -218,7 +218,7 @@
     <select id="findAll" resultType="com.it.pojo.WasteInfo">
         select * from waste_info
         <where>
-            and 1=1
+            isdeleted = 1 and 1=1
             <!--名称-->
             <if test="wasteName!=null and wasteName!=''">
                 and waste_name like concat('%', #{wasteName}, '%')
@@ -243,7 +243,13 @@
             <if test="operator!=null and operator!=''">
                 and operator like concat('%', #{operator}, '%')
             </if>
+
         </where>
+    </select>
+    <select id="findOne" resultType="com.it.pojo.WasteInfo">
+        select *
+        from waste_info
+        where id = #{id};
     </select>
     <update id="updateByExampleSelective" parameterType="map">
         update waste_info
@@ -372,11 +378,23 @@
     <update id="updateWasteInfo">
         update waste_info
         <set>
+            <if test="batchCode!=null and batchCode!=''">
+                batch_code = #{batchCode},
+            </if>
             <if test="wasteName!=null and wasteName!=''">
-                waste_name = ${wasteName},
+                waste_name = #{wasteName},
             </if>
             <if test="amount!=null and amount!=''">
-                amount = ${amount},
+                amount = #{amount},
+            </if>
+            <if test="measure!=null and measure!=''">
+                measure = #{measure},
+            </if>
+            <if test="operator!=null and operator!=''">
+                operator = #{operator},
+            </if>
+            <if test="isDeleted!=null ">
+                isdeleted = #{isDeleted},
             </if>
         </set>
         where id=#{id}

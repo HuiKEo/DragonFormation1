@@ -30,5 +30,7 @@ public interface WasteInfoMapper {
 
     List<WasteInfo> findAll(WasteInfo wasteInfo);
 
-    WasteInfo updateWasteInfo(WasteInfo wasteInfo);
+    WasteInfo findOne(int id);
+
+    int updateWasteInfo(WasteInfo wasteInfo);
 }

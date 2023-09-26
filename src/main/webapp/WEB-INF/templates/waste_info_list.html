@@ -107,25 +107,32 @@
                             <div class="adv-table">
                                 <form th:action="@{waste_info/list}" method="post">
                                     <label>
-                                        <input type="text" name="name" id="name" placeholder="请输入废料名称" th:value="${param.name}">
+                                        <input type="text" name="aname" id="name" placeholder="请输入废料名称"
+                                               th:value="${param.aname}">
                                     </label>
                                     <label>
-                                        <input type="text" name="feature" id="feature" placeholder="请输入废料特性" th:value="${param.feature}">
+                                        <input type="text" name="afeature" id="feature" placeholder="请输入废料特性"
+                                               th:value="${param.afeature}">
                                     </label>
                                     <label>
-                                        <input type="text" name="enterprise" id="enterprise" placeholder="请输入废料企业来源" th:value="${param.enterprise}">
+                                        <input type="text" name="aenterprise" id="enterprise" placeholder="请输入废料企业来源"
+                                               th:value="${param.aenterprise}">
                                     </label>
                                     <label>
-                                        <input type="text" name="workshop" id="workshop" placeholder="请输入废料车间来源" th:value="${param.workshop}">
+                                        <input type="text" name="aworkshop" id="workshop" placeholder="请输入废料车间来源"
+                                               th:value="${param.aworkshop}">
                                     </label>
                                     <label>
-                                        <input type="text" name="machine" id="machine" placeholder="请输入废料机器来源" th:value="${param.machine}">
+                                        <input type="text" name="amachine" id="machine" placeholder="请输入废料机器来源"
+                                               th:value="${param.amachine}">
                                     </label>
                                     <label>
-                                        <input type="text" name="operator" id="operator" placeholder="请输入经办人" th:value="${param.operator}">
+                                        <input type="text" name="aoperator" id="operator" placeholder="请输入经办人"
+                                               th:value="${param.aoperator}">
                                     </label>
                                     <input type="submit" class="btn btn-success btn-sm" value="搜索">
                                     <input type="button" class="btn btn-info btn-sm" value="重置" onclick="backData()">
+                                    <input type="button" class="btn btn-default btn-sm" value="导出" onclick="waste_export()">
                                 </form>
                                 <table class="display table table-bordered table-striped" id="dynamic-table">
                                     <thead>
@@ -161,8 +168,11 @@
                                         <td th:text="${waste.operator}"></td>
                                         <td th:text="${#dates.format(waste.createTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
                                         <td>
-                                            <button class="btn btn-warning btn-sm" th:onclick="update_waste()">修改</button>
-                                            <button class="btn btn-danger btn-sm" >删除</button>
+                                            <button class="btn btn-warning btn-sm"
+                                                    th:onclick="'update_waste('+${waste.id}+')'">修改
+                                            </button>
+                                            <button class="btn btn-danger btn-sm"
+                                                    th:onclick="'delete_waste('+${waste.id}+')'">删除</button>
                                         </td>
                                     </tr>
 
@@ -196,22 +206,24 @@
 
 <script type="text/javascript">
     function backData() {
-        document.getElementById("name").value="";
-        document.getElementById("feature").value="";
-        document.getElementById("enterprise").value="";
-        document.getElementById("workshop").value="";
-        document.getElementById("machine").value="";
-        document.getElementById("operator").value="";
+        document.getElementById("name").value = "";
+        document.getElementById("feature").value = "";
+        document.getElementById("enterprise").value = "";
+        document.getElementById("workshop").value = "";
+        document.getElementById("machine").value = "";
+        document.getElementById("operator").value = "";
     }
-    function update_waste() {
 
+    function update_waste(id) {
+        location.href="http://localhost:8080/waste_product/waste_info/data?id="+id;
+    }
+    function delete_waste(id) {
+        location.href="http://localhost:8080/waste_product/waste_info/delete?id="+id;
+    }
+    function waste_export() {
+        location.href="http://localhost:8080/waste_product/waste_info/export"
     }
 </script>
-<!--&lt;!&ndash;dynamic table&ndash;&gt;-->
-<!--<script type="text/javascript" language="javascript" src="js/advanced-datatable/js/jquery.dataTables.js"></script>-->
-<!--<script type="text/javascript" src="js/data-tables/DT_bootstrap.js"></script>-->
-<!--&lt;!&ndash;dynamic table initialization &ndash;&gt;-->
-<!--<script src="js/dynamic_table_init.js"></script>-->
 
 <!--common scripts for all pages-->
 <script src="js/scripts.js"></script>
