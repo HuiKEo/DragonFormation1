@@ -56,6 +56,18 @@ public class DispositionInfoServiceImpl implements DispositionInfoService {
     }
 
 
+
+    @Override
+    public DispositionInfo updategetInfo(Integer id) {
+        return dispositionInfoMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public void updateDispositionInfo(DispositionInfo dispositionInfo) {
+        dispositionInfoMapper.updateByPrimaryKeySelective(dispositionInfo);
+    }
+
+
  /*   @Override
     public void examineDisposition() {
         dispositionInfoMapper.updateByExample();

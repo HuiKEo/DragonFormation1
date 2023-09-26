@@ -20,6 +20,13 @@ public interface DispositionInfoService {
     //删除处置厂商信息
     void deleteDispositionInfo(DispositionInfo dispositionInfo);
 
+
+    //修改时获取对象
+    DispositionInfo updategetInfo(Integer id);
+
+
+    void updateDispositionInfo(DispositionInfo dispositionInfo);
+
 /*    //处置厂商信息审核
     public void examineDisposition();*/
 

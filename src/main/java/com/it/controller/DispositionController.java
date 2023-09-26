@@ -9,6 +9,7 @@ import com.it.service.DispositionInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -55,13 +56,38 @@ public class DispositionController {
     }
 
 
+    //删除时逻辑删除
     @RequestMapping(value = "/deletedisposition/{id}",method = RequestMethod.DELETE)
     public String deleteInfo(DispositionInfo dispositionInfo){
-       /* dispositionInfoService.deleteDispositionInfo(id);
-        System.out.println(id);*/
         dispositionInfo.setIsdeleted(0);
         dispositionInfoService.deleteDispositionInfo(dispositionInfo);
         return "redirect:/disposition/dispositionList";
+    }
+
+  /*  @RequestMapping(value = "/updatedisposition/{id}",method = RequestMethod.PUT)
+    public String updateInfo(DispositionInfo dispositionInfo){
+        dispositionInfoService.deleteDispositionInfo(dispositionInfo);
+        return "redirect:/disposition/dispositionList";
+    }*/
+
+
+    //修改
+    @RequestMapping(value = "/update",method = RequestMethod.PUT)
+    public String updateInfo(DispositionInfo dispositionInfo,
+                             HttpServletRequest request){
+        String id = request.getParameter("id");
+        dispositionInfo.setId(Integer.parseInt(id));
+        System.out.println("进来了");
+        dispositionInfoService.updateDispositionInfo(dispositionInfo);
+        return "redirect:/disposition/dispositionList";
+    }
+
+
+    //获取修改时值
+    @RequestMapping(value = "/toUpdate/{id}",method = RequestMethod.GET)
+    @ResponseBody
+    public DispositionInfo infoDetail(@PathVariable("id") Integer id, Model model){
+        return dispositionInfoService.updategetInfo(id);
     }
 
 }
