@@ -87,7 +87,7 @@
         <!-- page heading start-->
         <div class="page-heading">
             <h3>
-                WASTE TABLE
+                废料管理
             </h3>
         </div>
         <!-- page heading end-->
@@ -98,7 +98,7 @@
                 <div class="col-sm-12">
                     <section class="panel">
                         <header class="panel-heading">
-                            WASTE TABLE
+                            废料管理
                             <span class="tools pull-right">
                 <a href="javascript:;" class="fa fa-chevron-down"></a>
              </span>
@@ -159,9 +159,9 @@
                                         <td th:text="${waste.sourceMachine}"></td>
                                         <td th:text="${waste.feature}"></td>
                                         <td th:text="${waste.operator}"></td>
-                                        <td th:text="${waste.createTime}"></td>
+                                        <td th:text="${#dates.format(waste.createTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
                                         <td>
-                                            <button class="btn btn-warning btn-sm" >修改</button>
+                                            <button class="btn btn-warning btn-sm" th:onclick="update_waste()">修改</button>
                                             <button class="btn btn-danger btn-sm" >删除</button>
                                         </td>
                                     </tr>
@@ -202,6 +202,9 @@
         document.getElementById("workshop").value="";
         document.getElementById("machine").value="";
         document.getElementById("operator").value="";
+    }
+    function update_waste() {
+
     }
 </script>
 <!--&lt;!&ndash;dynamic table&ndash;&gt;-->
