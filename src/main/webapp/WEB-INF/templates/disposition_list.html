@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<base th:href="@{/}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="ThemeBucket">
+    <link rel="shortcut icon" href="#" type="image/png">
+
+    <title>Dynamic Table</title>
+
+    <!--dynamic table-->
+    <link href="js/advanced-datatable/css/demo_page.css" rel="stylesheet"/>
+    <link href="js/advanced-datatable/css/demo_table.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="js/data-tables/DT_bootstrap.css"/>
+
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/style-responsive.css" rel="stylesheet">
+
+    <!--ios7-->
+    <link rel="stylesheet" type="text/css" href="js/ios-switch/switchery.css"/>
+
+    <!--icheck-->
+    <link href="js/iCheck/skins/minimal/minimal.css" rel="stylesheet">
+    <link href="js/iCheck/skins/minimal/red.css" rel="stylesheet">
+    <link href="js/iCheck/skins/minimal/green.css" rel="stylesheet">
+    <link href="js/iCheck/skins/minimal/blue.css" rel="stylesheet">
+    <link href="js/iCheck/skins/minimal/yellow.css" rel="stylesheet">
+    <link href="js/iCheck/skins/minimal/purple.css" rel="stylesheet">
+
+    <link href="js/iCheck/skins/square/square.css" rel="stylesheet">
+    <link href="js/iCheck/skins/square/red.css" rel="stylesheet">
+    <link href="js/iCheck/skins/square/green.css" rel="stylesheet">
+    <link href="js/iCheck/skins/square/blue.css" rel="stylesheet">
+    <link href="js/iCheck/skins/square/yellow.css" rel="stylesheet">
+    <link href="js/iCheck/skins/square/purple.css" rel="stylesheet">
+
+    <link href="js/iCheck/skins/flat/grey.css" rel="stylesheet">
+    <link href="js/iCheck/skins/flat/red.css" rel="stylesheet">
+    <link href="js/iCheck/skins/flat/green.css" rel="stylesheet">
+    <link href="js/iCheck/skins/flat/blue.css" rel="stylesheet">
+    <link href="js/iCheck/skins/flat/yellow.css" rel="stylesheet">
+    <link href="js/iCheck/skins/flat/purple.css" rel="stylesheet">
+
+    <!--multi-select-->
+    <link rel="stylesheet" type="text/css" href="js/jquery-multi-select/css/multi-select.css"/>
+
+    <!--file upload-->
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-fileupload.min.css"/>
+
+    <!--tags input-->
+    <link rel="stylesheet" type="text/css" href="js/jquery-tags-input/jquery.tagsinput.css"/>
+
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript">
+
+        //分页
+        function jumpPage(pageNo) {
+            let selectForm = $("#selectForm");
+            $("#pageNo").val(parseInt(pageNo));
+            selectForm.submit();
+        }
+
+        //删除
+        function deleteInfo(id, name) {
+            if (confirm("确定删除【" + name + "】")) {
+                $.ajax({
+                    type: "DELETE",
+                    url: "disposition/deletedisposition/" + id,
+                    success: function () {
+                        //刷新
+                        location.reload();
+                    }
+                })
+            }
+        }
+
+        //修改
+        function updateInfo(id) {
+            // window.location.href = "disposition/toUpdate/" + id;
+            $.ajax({
+                type: "get",
+                url: "disposition/toUpdate/" + id,
+                success: function (data) {
+                    $("#name").val(data.name)
+                    $("#licence").val(data.licence)
+                    $("#status").val(data.status)
+                    var date = new Date();
+                    date.setTime(data.createTime)
+
+                    console.log(data.createTime)
+                    console.log(date.toLocaleDateString())
+                    $("#createTime").val(date.toLocaleDateString())
+                }
+            })
+        }
+
+    </script>
+</head>
+
+<body class="sticky-header">
+<section>
+    <!-- left side start-->
+    <div class="left-side sticky-left-side">
+
+        <!--logo and iconic logo start-->
+        <div class="logo">
+            <a href="client_index.html"><img src="images/logo.png" alt=""></a>
+        </div>
+
+        <div class="logo-icon text-center">
+            <a href="client_index.html"><img src="images/logo_icon.png" alt=""></a>
+        </div>
+        <!--logo and iconic logo end-->
+        <div class="left-side-inner">
+
+            <!-- visible to small devices only -->
+            <div class="visible-xs hidden-sm hidden-md hidden-lg">
+                <div class="media logged-user">
+                    <img alt="" src="images/photos/user-avatar.png" class="media-object">
+                    <div class="media-body">
+                        <h4><a href="#">John Doe</a></h4>
+                        <span>"Hello There..."</span>
+                    </div>
+                </div>
+
+                <h5 class="left-nav-title">Account Information</h5>
+                <ul class="nav nav-pills nav-stacked custom-nav">
+                    <li><a href="#"><i class="fa fa-user"></i> <span>Profile</span></a></li>
+                    <li><a href="#"><i class="fa fa-cog"></i> <span>Settings</span></a></li>
+                    <li><a href="#"><i class="fa fa-sign-out"></i> <span>Sign Out</span></a></li>
+                </ul>
+            </div>
+
+            <!--sidebar nav start-->
+            <nav th:include="common/sidebar :: sidebar"></nav>
+            <!--sidebar nav end-->
+        </div>
+    </div>
+    <!-- left side end-->
+
+    <!-- main content start-->
+    <div class="main-content">
+
+        <!-- header section start-->
+        <div class="header-section">
+
+            <!--toggle button start-->
+            <a class="toggle-btn"><i class="fa fa-bars"></i></a>
+            <!--toggle button end-->
+
+            <!--notification menu start -->
+            <nav th:include="common/header :: notification-info"></nav>
+            <!--notification menu end -->
+        </div>
+        <!-- header section end-->
+
+        <!-- page heading start-->
+        <div class="page-heading">
+            <h3>
+                Dynamic Table
+            </h3>
+        </div>
+        <!-- page heading end-->
+
+        <!--body wrapper start-->
+        <div class="wrapper">
+            <div class="row">
+                <form class="col-sm-12 form-inline" role="form" id="selectForm"
+                      th:action="@{/disposition/dispositionList}"
+                      method="get">
+                    <input type="hidden" id="pageNo" name="pageNo" value="1">
+                    <div class="form-group">
+                        <label class=" control-label">单位名称:</label>
+                        <input type="text" class="form-control" placeholder="单位名称" name="name" th:value="${param.name}">
+                    </div>
+                    <div class="form-group">
+                        <label class=" control-label">许可证编码:</label>
+                        <input type="text" class="form-control" placeholder="许可证编码" name="licence"
+                               th:value="${param.licence}">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">最小日期:</label>
+                        <input type="date" class="form-control" placeholder="最小日期" name="minTime"
+                               th:value="${param.minTime}">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">最大日期:</label>
+                        <input type="date" class="form-control" placeholder="最大日期" name="maxTime"
+                               th:value="${param.maxTime}">
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="selectFormSubBtn">查询</button>
+                </form>
+                <div class="col-sm-12">
+                    <section class="panel">
+                        <header class="panel-heading">
+                            处置厂商注册信息
+                            <span class="tools pull-right">
+                <a href="javascript:;" class="fa fa-chevron-down"></a>
+             </span>
+                        </header>
+                        <div class="panel-body">
+                            <div class="adv-table">
+                                <table class="display table table-bordered table-striped" id="dynamic-table">
+                                    <thead>
+                                    <tr>
+                                        <th>编号</th>
+                                        <th>单位名称</th>
+                                        <th>许可证编码</th>
+                                        <th class="hidden-phone">状态（0待审核 1已审核）</th>
+                                        <th class="hidden-phone">创建时间</th>
+                                        <th class="hidden-phone">是否删除</th>
+                                        <th class="hidden-phone">操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="disposition : ${pageInfo.list}" >
+                                        <td th:text="${disposition.id}"></td>
+                                        <td th:text="${disposition.name}"></td>
+                                        <td th:text="${disposition.licence}"></td>
+                                        <td>
+                                            <label for="checkbox1"  th:if="${disposition.index!=0}">
+                                                <input type="checkbox" name="checkbox1" id="checkbox1"
+                                                       class="js-switch-teal" checked/>
+                                            </label>
+                                        </td>
+                                        <td th:text="${disposition.status}"></td>
+                                        <td th:text="${#dates.format(disposition.createTime, 'yyyy-MM-dd HH:mm')}"></td>
+                                        <td th:text="${disposition.isdeleted}"></td>
+                                        <td>
+                                            <button type="button" class="layui-btn btn btn-info" data-toggle="modal"
+                                                    href="#updateModal"
+                                                    th:onclick="'updateInfo('+${disposition.id}+')'">修改
+                                            </button>
+                                            <button type="button" class="layui-btn btn btn-danger"
+                                                    th:data-infoId="${disposition.id}"
+                                                    th:data-infoTitle="${disposition.name}"
+                                                    th:onclick="deleteInfo([[${disposition.id}]],[[${disposition.name}]])">
+                                                删除
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="span6">
+                                <div class="dataTables_info" id="dynamic-table_info"><span class="layui-laypage-count">总记录数:[[${pageInfo.total}]] </span>
+                                    <span class="layui-laypage-count">总页数:[[${pageInfo.pages}]]</span>
+                                    <span class="layui-laypage-count">当前第:[[${pageInfo.pageNum}]]页</span></div>
+                            </div>
+                            <div class="span6">
+                                <div class="dataTables_paginate paging_bootstrap pagination">
+                                    <ul>s
+                                        <span>
+                                            <li class="prev disabled"><a href="javascript:void(0)"
+                                                                         th:onclick="'jumpPage('+${pageInfo.prePage}+')'"
+                                                                         th:classappend="${!pageInfo.hasPreviousPage} ? 'layui-laypage-prev layui-disabled' : '' ">← Prev</a></li>
+
+                                        </span>
+                                        <span th:each="pageNum : ${pageInfo.navigatepageNums}"
+                                              style="width: 25px;border-color: white;">
+                                           <a href="javascript:void(0)" th:onclick="'jumpPage('+${pageNum}+')'"
+                                              th:text="${pageNum}"
+                                              th:style="${pageNum == pageInfo.pageNum}?'background-color: #16baaa;color: white':''"></a>
+                                        </span>
+                                        <span>
+                                        <li class="next"><a href="javascript:void(0);"
+                                                            th:onclick="'jumpPage('+${pageInfo.nextPage}+')'"
+                                                            th:classappend="${!pageInfo.hasNextPage} ? 'layui-laypage-prev layui-disabled' : '' ">Next → </a></li>
+                                        </span>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Modal -->
+                        <div class="modal fade" id="updateModal" tabindex="-1" role="dialog"
+                             aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                            &times;
+                                        </button>
+                                        <h4 class="modal-title">Datepicker in Modal</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="infoForm" class="form-horizontal " th:action="@{/disposition/update}"
+                                              method="post">
+                                            <input type="hidden" name="_method" th:value="PUT">
+                                            <input type="hidden" name="id">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4"> 单位名称</label>
+                                                <div class="col-md-6">
+                                                    <input size="16" type="text" id="name" name="name"
+                                                           class="form_datetime form-control">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4"> 许可证编码</label>
+                                                <div class="col-md-6">
+                                                    <input size="16" type="text" id="licence" name="licence"
+                                                           class="form_datetime form-control">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4"> 审核状态</label>
+                                                <div class="col-md-6">
+                                                    <input size="16" type="text" id="status" name="status"
+                                                           class="form_datetime form-control">
+                                                </div>
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <button data-dismiss="modal" class="btn btn-primary" id="updateInfoBtn"
+                                                        type="button">修改
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button data-dismiss="modal" class="btn btn-primary" type="button">Close
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- modal -->
+                    </section>
+                </div>
+            </div>
+        </div>
+
+        <!--footer section start-->
+
+    </div>
+    <footer>
+        2014 &copy; AdminEx by ThemeBucket
+    </footer>
+    <!--footer section end-->
+    <!-- main content end-->
+</section>
+
+<!-- Placed js at the end of the document so the pages load faster -->
+<script src="js/jquery-ui-1.9.2.custom.min.js"></script>
+<script src="js/jquery-migrate-1.2.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/modernizr.min.js"></script>
+<script src="js/jquery.nicescroll.js"></script>
+<!-- Placed js at the end of the document so the pages load faster -->
+<script src="js/jquery-1.10.2.min.js"></script>
+<script src="js/jquery-ui-1.9.2.custom.min.js"></script>
+<script src="js/jquery-migrate-1.2.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/modernizr.min.js"></script>
+<script src="js/jquery.nicescroll.js"></script>
+
+<!--ios7-->
+<script src="js/ios-switch/switchery.js"></script>
+<script src="js/ios-switch/ios-init.js"></script>
+
+<!--icheck -->
+<script src="js/iCheck/jquery.icheck.js"></script>
+<script src="js/icheck-init.js"></script>
+<!--multi-select-->
+<script type="text/javascript" src="js/jquery-multi-select/js/jquery.multi-select.js"></script>
+<script type="text/javascript" src="js/jquery-multi-select/js/jquery.quicksearch.js"></script>
+<script src="js/multi-select-init.js"></script>
+<!--spinner-->
+<script type="text/javascript" src="js/fuelux/js/spinner.min.js"></script>
+<script src="js/spinner-init.js"></script>
+<!--file upload-->
+<script type="text/javascript" src="js/bootstrap-fileupload.min.js"></script>
+<!--tags input-->
+<script src="js/jquery-tags-input/jquery.tagsinput.js"></script>
+<script src="js/tagsinput-init.js"></script>
+<!--bootstrap input mask-->
+<script type="text/javascript" src="js/bootstrap-inputmask/bootstrap-inputmask.min.js"></script>
+<!--dynamic table-->
+<script type="text/javascript" language="javascript" src="js/advanced-datatable/js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="js/data-tables/DT_bootstrap.js"></script>
+<!--dynamic table initialization -->
+<!--<script src="js/dynamic_table_init.js"></script>-->
+
+<!--common scripts for all pages-->
+<script src="js/scripts.js"></script>
+
+
+</body>
+</html>

@@ -143,7 +143,7 @@
                             <div>
                                 <div class="dataTables_paginate paging_bootstrap pagination">
                                     <ul>
-                                        <li th:classappend=""><a th:style="${!rolePageInfo.hasPreviousPage} ? 'pointer-events: none;' : '' " href="javascript:void(0);" th:onclick="'jumpPage('+${rolePageInfo.pageNum - 1}+')'">上一页</a></li>
+                                        <li><a th:style="${!rolePageInfo.hasPreviousPage} ? 'pointer-events: none;' : '' " href="javascript:void(0);" th:onclick="'jumpPage('+${rolePageInfo.pageNum - 1}+')'">上一页</a></li>
                                         <li class="active"><a href="javascript:void(0);" th:text="${rolePageInfo.pageNum}"></a></li>
                                         <li><a th:style="${!rolePageInfo.hasNextPage} ? 'pointer-events: none;' : '' " th:onclick="'jumpPage('+${rolePageInfo.pageNum + 1}+')'">下一页</a></li>
                                     </ul>
