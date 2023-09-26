@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.it.mapper.RoleMapper">
-  <resultMap id="BaseResultMap" type="com.it.pojo.Role">
+<mapper namespace="com.it.mapper.WasteInputMapper">
+  <resultMap id="BaseResultMap" type="com.it.pojo.WasteInput">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="rolename" jdbcType="VARCHAR" property="rolename" />
-    <result column="remark" jdbcType="VARCHAR" property="remark" />
-    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="batch_code" jdbcType="VARCHAR" property="batchCode" />
+    <result column="storage_date" jdbcType="TIMESTAMP" property="storageDate" />
+    <result column="amount" jdbcType="INTEGER" property="amount" />
+    <result column="measure" jdbcType="VARCHAR" property="measure" />
+    <result column="handler" jdbcType="VARCHAR" property="handler" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="isdeleted" jdbcType="INTEGER" property="isdeleted" />
   </resultMap>
@@ -68,15 +70,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, rolename, remark, status, create_time, isdeleted
+    id, batch_code, storage_date, amount, measure, handler, create_time, isdeleted
   </sql>
-  <select id="selectByExample" parameterType="com.it.pojo.RoleExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.it.pojo.WasteInputExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from role
+    from waste_input
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -87,41 +89,47 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from role
+    from waste_input
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from role
+    delete from waste_input
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.it.pojo.RoleExample">
-    delete from role
+  <delete id="deleteByExample" parameterType="com.it.pojo.WasteInputExample">
+    delete from waste_input
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.it.pojo.Role">
-    insert into role (id, rolename, remark, 
-      status, create_time, isdeleted
-      )
-    values (#{id,jdbcType=INTEGER}, #{rolename,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
-      #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{isdeleted,jdbcType=INTEGER}
-      )
+  <insert id="insert" parameterType="com.it.pojo.WasteInput">
+    insert into waste_input (id, batch_code, storage_date, 
+      amount, measure, handler, 
+      create_time, isdeleted)
+    values (#{id,jdbcType=INTEGER}, #{batchCode,jdbcType=VARCHAR}, #{storageDate,jdbcType=TIMESTAMP}, 
+      #{amount,jdbcType=INTEGER}, #{measure,jdbcType=VARCHAR}, #{handler,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{isdeleted,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.it.pojo.Role">
-    insert into role
+  <insert id="insertSelective" parameterType="com.it.pojo.WasteInput">
+    insert into waste_input
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
       </if>
-      <if test="rolename != null">
-        rolename,
+      <if test="batchCode != null">
+        batch_code,
       </if>
-      <if test="remark != null">
-        remark,
+      <if test="storageDate != null">
+        storage_date,
       </if>
-      <if test="status != null">
-        status,
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="measure != null">
+        measure,
+      </if>
+      <if test="handler != null">
+        handler,
       </if>
       <if test="createTime != null">
         create_time,
@@ -134,14 +142,20 @@
       <if test="id != null">
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="rolename != null">
-        #{rolename,jdbcType=VARCHAR},
+      <if test="batchCode != null">
+        #{batchCode,jdbcType=VARCHAR},
       </if>
-      <if test="remark != null">
-        #{remark,jdbcType=VARCHAR},
+      <if test="storageDate != null">
+        #{storageDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="status != null">
-        #{status,jdbcType=INTEGER},
+      <if test="amount != null">
+        #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="measure != null">
+        #{measure,jdbcType=VARCHAR},
+      </if>
+      <if test="handler != null">
+        #{handler,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
@@ -151,26 +165,32 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.it.pojo.RoleExample" resultType="java.lang.Long">
-    select count(*) from role
+  <select id="countByExample" parameterType="com.it.pojo.WasteInputExample" resultType="java.lang.Long">
+    select count(*) from waste_input
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update role
+    update waste_input
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.rolename != null">
-        rolename = #{record.rolename,jdbcType=VARCHAR},
+      <if test="record.batchCode != null">
+        batch_code = #{record.batchCode,jdbcType=VARCHAR},
       </if>
-      <if test="record.remark != null">
-        remark = #{record.remark,jdbcType=VARCHAR},
+      <if test="record.storageDate != null">
+        storage_date = #{record.storageDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.status != null">
-        status = #{record.status,jdbcType=INTEGER},
+      <if test="record.amount != null">
+        amount = #{record.amount,jdbcType=INTEGER},
+      </if>
+      <if test="record.measure != null">
+        measure = #{record.measure,jdbcType=VARCHAR},
+      </if>
+      <if test="record.handler != null">
+        handler = #{record.handler,jdbcType=VARCHAR},
       </if>
       <if test="record.createTime != null">
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
@@ -184,28 +204,36 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update role
+    update waste_input
     set id = #{record.id,jdbcType=INTEGER},
-      rolename = #{record.rolename,jdbcType=VARCHAR},
-      remark = #{record.remark,jdbcType=VARCHAR},
-      status = #{record.status,jdbcType=INTEGER},
+      batch_code = #{record.batchCode,jdbcType=VARCHAR},
+      storage_date = #{record.storageDate,jdbcType=TIMESTAMP},
+      amount = #{record.amount,jdbcType=INTEGER},
+      measure = #{record.measure,jdbcType=VARCHAR},
+      handler = #{record.handler,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       isdeleted = #{record.isdeleted,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.it.pojo.Role">
-    update role
+  <update id="updateByPrimaryKeySelective" parameterType="com.it.pojo.WasteInput">
+    update waste_input
     <set>
-      <if test="rolename != null">
-        rolename = #{rolename,jdbcType=VARCHAR},
+      <if test="batchCode != null">
+        batch_code = #{batchCode,jdbcType=VARCHAR},
       </if>
-      <if test="remark != null">
-        remark = #{remark,jdbcType=VARCHAR},
+      <if test="storageDate != null">
+        storage_date = #{storageDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="status != null">
-        status = #{status,jdbcType=INTEGER},
+      <if test="amount != null">
+        amount = #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="measure != null">
+        measure = #{measure,jdbcType=VARCHAR},
+      </if>
+      <if test="handler != null">
+        handler = #{handler,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -216,20 +244,15 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.it.pojo.Role">
-    update role
-    set rolename = #{rolename,jdbcType=VARCHAR},
-      remark = #{remark,jdbcType=VARCHAR},
-      status = #{status,jdbcType=INTEGER},
+  <update id="updateByPrimaryKey" parameterType="com.it.pojo.WasteInput">
+    update waste_input
+    set batch_code = #{batchCode,jdbcType=VARCHAR},
+      storage_date = #{storageDate,jdbcType=TIMESTAMP},
+      amount = #{amount,jdbcType=INTEGER},
+      measure = #{measure,jdbcType=VARCHAR},
+      handler = #{handler,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       isdeleted = #{isdeleted,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
-
-  <!--  List<Role> queryRoleByUserId(Integer id);-->
-  <select id="queryRoleByUserId" resultType="com.it.pojo.Role">
-        SELECT role.id,role.rolename,role.remark
-        FROM user_role,USER,role
-        WHERE user_role.`role_id` = role.`id` AND user_role.user_id = user.id AND user.id = #{id}
-  </select>
 </mapper>

@@ -18,7 +18,11 @@
 <!--    <security:global-method-security secured-annotations="enabled"></security:global-method-security>-->
     <!-- 配置不拦截的资源（静态资源及登录相关）-->
     <security:http pattern="/login.html" security="none"/>
-    <security:http pattern="/fail.html" security="none"/>
+    <security:http pattern="/register.html" security="none"/>
+    <security:http pattern="/register_disposition.html" security="none"/>
+    <security:http pattern="/403.html" security="none"/>
+    <security:http pattern="/404.html" security="none"/>
+    <security:http pattern="/500.html" security="none"/>
     <security:http pattern="/css/**" security="none"/>
     <security:http pattern="/fonts/**" security="none"/>
     <security:http pattern="/images/**" security="none"/>
@@ -45,7 +49,7 @@
                 default-target-url="/client_index.html"
                 username-parameter="username"
                 password-parameter="password"
-                authentication-failure-url="/fail.html"
+                authentication-failure-url="/403.html"
         />
 
         <!-- 关闭跨域请求 -->

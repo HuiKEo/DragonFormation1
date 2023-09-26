@@ -27,4 +27,8 @@ public interface WasteInfoMapper {
     int updateByPrimaryKeySelective(WasteInfo record);
 
     int updateByPrimaryKey(WasteInfo record);
+
+    List<WasteInfo> findAll(WasteInfo wasteInfo);
+
+    WasteInfo updateWasteInfo(WasteInfo wasteInfo);
 }

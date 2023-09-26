@@ -1,7 +1,11 @@
 package com.it.pojo;
 
+import lombok.Data;
+
 import java.util.Date;
 
+
+@Data
 public class WasteInfo {
     private Integer id;
 
