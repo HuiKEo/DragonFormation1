@@ -86,18 +86,30 @@
                 type: "get",
                 url: "disposition/toUpdate/" + id,
                 success: function (data) {
+                    var str = '';
+                    $("#id").val(data.id)
                     $("#name").val(data.name)
                     $("#licence").val(data.licence)
                     $("#status").val(data.status)
-                    var date = new Date();
-                    date.setTime(data.createTime)
-
-                    console.log(data.createTime)
-                    console.log(date.toLocaleDateString())
-                    $("#createTime").val(date.toLocaleDateString())
+                    if(parseInt(data.status) === 0){
+                        str += "<option value='0' selected>待审核</option><option value='1'>已审核</option>"
+                    }
+                    if(parseInt(data.status) === 1){
+                        str += "<option value='0'>待审核</option><option value='1' selected>已审核</option>"
+                    }
+                    $("#status").html(str);
                 }
             })
         }
+
+            $(function (){
+            $("#updateInfoBtn").bind("click",function (){
+                if(confirm("确认提交？")){
+                    $("#infoForm").submit();
+                }
+
+            })
+        });
 
     </script>
 </head>
@@ -213,7 +225,6 @@
                                         <th>许可证编码</th>
                                         <th class="hidden-phone">状态（0待审核 1已审核）</th>
                                         <th class="hidden-phone">创建时间</th>
-                                        <th class="hidden-phone">是否删除</th>
                                         <th class="hidden-phone">操作</th>
                                     </tr>
                                     </thead>
@@ -222,15 +233,8 @@
                                         <td th:text="${disposition.id}"></td>
                                         <td th:text="${disposition.name}"></td>
                                         <td th:text="${disposition.licence}"></td>
-                                        <td>
-                                            <label for="checkbox1"  th:if="${disposition.index!=0}">
-                                                <input type="checkbox" name="checkbox1" id="checkbox1"
-                                                       class="js-switch-teal" checked/>
-                                            </label>
-                                        </td>
-                                        <td th:text="${disposition.status}"></td>
+                                        <td th:text="${disposition.status}==1?'已审核':'未审核'"></td>
                                         <td th:text="${#dates.format(disposition.createTime, 'yyyy-MM-dd HH:mm')}"></td>
-                                        <td th:text="${disposition.isdeleted}"></td>
                                         <td>
                                             <button type="button" class="layui-btn btn btn-info" data-toggle="modal"
                                                     href="#updateModal"
@@ -254,24 +258,24 @@
                             </div>
                             <div class="span6">
                                 <div class="dataTables_paginate paging_bootstrap pagination">
-                                    <ul>s
-                                        <span>
+                                    <ul>
+
                                             <li class="prev disabled"><a href="javascript:void(0)"
                                                                          th:onclick="'jumpPage('+${pageInfo.prePage}+')'"
                                                                          th:classappend="${!pageInfo.hasPreviousPage} ? 'layui-laypage-prev layui-disabled' : '' ">← Prev</a></li>
 
-                                        </span>
-                                        <span th:each="pageNum : ${pageInfo.navigatepageNums}"
+
+                                        <li th:each="pageNum : ${pageInfo.navigatepageNums}"
                                               style="width: 25px;border-color: white;">
                                            <a href="javascript:void(0)" th:onclick="'jumpPage('+${pageNum}+')'"
                                               th:text="${pageNum}"
                                               th:style="${pageNum == pageInfo.pageNum}?'background-color: #16baaa;color: white':''"></a>
-                                        </span>
-                                        <span>
+                                        </li>
+
                                         <li class="next"><a href="javascript:void(0);"
                                                             th:onclick="'jumpPage('+${pageInfo.nextPage}+')'"
                                                             th:classappend="${!pageInfo.hasNextPage} ? 'layui-laypage-prev layui-disabled' : '' ">Next → </a></li>
-                                        </span>
+
                                     </ul>
                                 </div>
                             </div>
@@ -291,7 +295,7 @@
                                         <form id="infoForm" class="form-horizontal " th:action="@{/disposition/update}"
                                               method="post">
                                             <input type="hidden" name="_method" th:value="PUT">
-                                            <input type="hidden" name="id">
+                                            <input type="hidden" name="id" id="id" >
                                             <div class="form-group">
                                                 <label class="control-label col-md-4"> 单位名称</label>
                                                 <div class="col-md-6">
@@ -311,8 +315,11 @@
                                             <div class="form-group">
                                                 <label class="control-label col-md-4"> 审核状态</label>
                                                 <div class="col-md-6">
-                                                    <input size="16" type="text" id="status" name="status"
-                                                           class="form_datetime form-control">
+                                                    <select class="form-control m-bot15 col-md-6" id="status" name="status">
+
+                                                    </select>
+                                                <!--    <input size="16" type="text" name="status"
+                                                           class="form_datetime form-control">-->
                                                 </div>
                                             </div>
 
