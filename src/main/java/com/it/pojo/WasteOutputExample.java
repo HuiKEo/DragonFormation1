@@ -192,6 +192,66 @@ public class WasteOutputExample {
             return (Criteria) this;
         }
 
+        public Criteria andWasteIdIsNull() {
+            addCriterion("waste_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWasteIdIsNotNull() {
+            addCriterion("waste_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWasteIdEqualTo(Integer value) {
+            addCriterion("waste_id =", value, "wasteId");
+            return (Criteria) this;
+        }
+
+        public Criteria andWasteIdNotEqualTo(Integer value) {
+            addCriterion("waste_id <>", value, "wasteId");
+            return (Criteria) this;
+        }
+
+        public Criteria andWasteIdGreaterThan(Integer value) {
+            addCriterion("waste_id >", value, "wasteId");
+            return (Criteria) this;
+        }
+
+        public Criteria andWasteIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("waste_id >=", value, "wasteId");
+            return (Criteria) this;
+        }
+
+        public Criteria andWasteIdLessThan(Integer value) {
+            addCriterion("waste_id <", value, "wasteId");
+            return (Criteria) this;
+        }
+
+        public Criteria andWasteIdLessThanOrEqualTo(Integer value) {
+            addCriterion("waste_id <=", value, "wasteId");
+            return (Criteria) this;
+        }
+
+        public Criteria andWasteIdIn(List<Integer> values) {
+            addCriterion("waste_id in", values, "wasteId");
+            return (Criteria) this;
+        }
+
+        public Criteria andWasteIdNotIn(List<Integer> values) {
+            addCriterion("waste_id not in", values, "wasteId");
+            return (Criteria) this;
+        }
+
+        public Criteria andWasteIdBetween(Integer value1, Integer value2) {
+            addCriterion("waste_id between", value1, value2, "wasteId");
+            return (Criteria) this;
+        }
+
+        public Criteria andWasteIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("waste_id not between", value1, value2, "wasteId");
+            return (Criteria) this;
+        }
+
         public Criteria andBatchCodeIsNull() {
             addCriterion("batch_code is null");
             return (Criteria) this;

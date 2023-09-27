@@ -180,6 +180,10 @@
 
                                     </tbody>
                                 </table>
+                                <div>
+                                    <a th:href="@{/waste_info/list(pageNum=${pageInfo.prePage})}" th:if="${pageInfo.hasPreviousPage}">上一页</a>
+                                    <a th:href="@{/waste_info/list(pageNum=${pageInfo.nextPage})}" th:if="${pageInfo.hasNextPage}">下一页</a>
+                                </div>
                             </div>
                         </div>
                     </section>
