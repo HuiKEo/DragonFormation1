@@ -11,7 +11,7 @@
         <!-- 配置数据库连接 -->
         <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
                         connectionURL="jdbc:mysql://rm-cn-zsk3dumjm0029p9o.rwlb.cn-chengdu.rds.aliyuncs.com:3306/dragongroup?characterEncoding=utf8&amp;useSSL=false&amp;serverTimezone=UTC&amp;rewriteBatchedStatements=true&amp;allowMultiQueries=true"
-                        userId="cl"
+                        userId="YTH"
                         password="Aa1Bb2Cc3">
         </jdbcConnection>
         <javaTypeResolver>
