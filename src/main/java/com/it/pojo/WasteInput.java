@@ -1,13 +1,11 @@
 package com.it.pojo;
 
-import lombok.Data;
-
 import java.util.Date;
 
-
-@Data
 public class WasteInput {
     private Integer id;
+
+    private Integer wasteId;
 
     private String batchCode;
 
@@ -29,6 +27,14 @@ public class WasteInput {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getWasteId() {
+        return wasteId;
+    }
+
+    public void setWasteId(Integer wasteId) {
+        this.wasteId = wasteId;
     }
 
     public String getBatchCode() {
