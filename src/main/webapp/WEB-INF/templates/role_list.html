@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!--suppress ThymeleafVariablesResolveInspection -->
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <base th:href="@{/}">
@@ -16,6 +17,12 @@
     <link href="js/advanced-datatable/css/demo_table.css" rel="stylesheet"/>
     <link rel="stylesheet" href="js/data-tables/DT_bootstrap.css"/>
 
+    <link href="js/iCheck/skins/minimal/green.css" rel="stylesheet">
+
+    <link href="js/iCheck/skins/square/green.css" rel="stylesheet">
+
+    <link href="js/iCheck/skins/flat/green.css" rel="stylesheet">
+
     <link href="css/style.css" rel="stylesheet">
     <link href="css/style-responsive.css" rel="stylesheet">
 
@@ -23,7 +30,62 @@
     <script src="js/jquery-1.10.2.min.js"></script>
     <script type="text/javascript">
         function jumpPage(pageNo) {
-            window.location.href = "http://localhost:8080/waste_product/role/list?pageNo="+pageNo;
+            window.location.href = "http://localhost:8080/waste_product/role/list?pageNo=" + pageNo;
+        }
+        function deleteRole(roleId){
+            $.ajax({
+                url: "http://localhost:8080/waste_product/role/delete/" + roleId,
+                type: "delete",
+                success:function (){
+                    location.reload();
+                }
+            })
+        }
+        function authorized(roleId,roleName) {
+            $("#roleName").text(roleName)
+            $("#roleId").val(roleId)
+            $.ajax({
+                url: "http://localhost:8080/waste_product/menu/queryRoleMenu/" + roleId,
+                type: "get",
+                success: function (data) {
+                    console.log(data)
+                    var str = "";
+                    var allMenu = data.allMenu;
+                    var roleMenu = data.roleMenu;
+                    var ids = new Array();
+                    for (let i = 0; i < roleMenu.length; i++) {
+                        ids.push(roleMenu[i].id);
+                    }
+                    for (let j = 0; j < allMenu.length; j++) {
+                        if(ids.includes(allMenu[j].id)){
+                            str += '<div class="single-row"><div class="radio"><input type="checkbox" name="checkedMenu" checked value="'+allMenu[j].id+'"><label>'+allMenu[j].menu+'</label></div></div>'
+                        }else {
+                            str += '<div class="single-row"><div class="radio"><input type="checkbox" name="checkedMenu" value="'+allMenu[j].id+'"><label>'+allMenu[j].menu+'</label></div></div>'
+                        }
+                    }
+                    $("#menuCheckboxList").html(str);
+                }
+            })
+        }
+
+        //获取checkbox选中的checkBox的元素
+        function getCheckedMenu(){
+            var checkedObject = $('input:checkbox[name="checkedMenu"]:checked');
+            var ids = [];
+            for (var i = 0; i < checkedObject.length; i ++) {
+                ids.push(checkedObject[i].value);
+            }
+            var roleId = $("#roleId").val();
+            console.log(roleId)
+            console.log(ids)
+            $.ajax({
+                url: "http://localhost:8080/waste_product/role/authorized",
+                type: "post",
+                data:{roleId:roleId,ids:ids},
+                success:function (msg){
+                    console.log(msg)
+                }
+            })
         }
     </script>
 </head>
@@ -132,9 +194,9 @@
                                         </td>
                                         <td>
                                             <button class="btn btn-info" type="button" data-toggle="modal"
-                                                    href="#myModal1">授权
+                                                    href="#myModal1" th:onclick="authorized([[${role.id}]],[[${role.rolename}]])">授权
                                             </button>
-                                            <button class="btn btn-danger" type="button">删除</button>
+                                            <button class="btn btn-danger" type="button" th:onclick="'deleteRole('+${role.id}+')'">删除</button>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -143,9 +205,14 @@
                             <div>
                                 <div class="dataTables_paginate paging_bootstrap pagination">
                                     <ul>
-                                        <li><a th:style="${!rolePageInfo.hasPreviousPage} ? 'pointer-events: none;' : '' " href="javascript:void(0);" th:onclick="'jumpPage('+${rolePageInfo.pageNum - 1}+')'">上一页</a></li>
-                                        <li class="active"><a href="javascript:void(0);" th:text="${rolePageInfo.pageNum}"></a></li>
-                                        <li><a th:style="${!rolePageInfo.hasNextPage} ? 'pointer-events: none;' : '' " th:onclick="'jumpPage('+${rolePageInfo.pageNum + 1}+')'">下一页</a></li>
+                                        <li>
+                                            <a th:style="${!rolePageInfo.hasPreviousPage} ? 'pointer-events: none;' : '' "
+                                               href="javascript:void(0);"
+                                               th:onclick="'jumpPage('+${rolePageInfo.pageNum - 1}+')'">上一页</a></li>
+                                        <li class="active"><a href="javascript:void(0);"
+                                                              th:text="${rolePageInfo.pageNum}"></a></li>
+                                        <li><a th:style="${!rolePageInfo.hasNextPage} ? 'pointer-events: none;' : '' "
+                                               th:onclick="'jumpPage('+${rolePageInfo.pageNum + 1}+')'">下一页</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -160,11 +227,29 @@
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                                             &times;
                                         </button>
-                                        <h4 class="modal-title">Datepicker in Modal</h4>
+                                        <h4 class="modal-title">授权</h4>
                                     </div>
+                                    <div class="modal-body">
+                                        <form class="form-horizontal bucket-form" method="post">
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">角色</label>
+                                                <div class="col-sm-9" style="margin-top: 5px;">
+                                                    <span style="margin-left: 20px;font-weight: 700;font-size: 20px;" id="roleName"></span>
+                                                    <input type="hidden" id="roleId">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">权限</label>
+                                                <div class="col-sm-9 icheck minimal" id="menuCheckboxList">
 
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
                                     <div class="modal-footer">
-                                        <button data-dismiss="modal" class="btn btn-primary" type="button">Close
+                                        <button data-dismiss="modal" class="btn btn-primary" type="button" onclick="getCheckedMenu()">提交
+                                        </button>
+                                        <button data-dismiss="modal" class="btn btn-primary" type="button">关闭
                                         </button>
                                     </div>
                                 </div>
@@ -198,9 +283,11 @@
 <script type="text/javascript" src="js/data-tables/DT_bootstrap.js"></script>
 <!--dynamic table initialization -->
 <!--<script src="js/dynamic_table_init.js"></script>-->
-
 <!--common scripts for all pages-->
 <script src="js/scripts.js"></script>
+<!--icheck -->
+<script src="js/iCheck/jquery.icheck.js"></script>
+<script src="js/icheck-init.js"></script>
 
 </body>
 </html>

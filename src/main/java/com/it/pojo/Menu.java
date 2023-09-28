@@ -11,7 +11,7 @@ public class Menu {
 
     private Integer parentid;
 
-    private String icon;
+    private Integer type;
 
     private Date createTime;
 
@@ -49,12 +49,12 @@ public class Menu {
         this.parentid = parentid;
     }
 
-    public String getIcon() {
-        return icon;
+    public Integer getType() {
+        return type;
     }
 
-    public void setIcon(String icon) {
-        this.icon = icon == null ? null : icon.trim();
+    public void setType(Integer type) {
+        this.type = type;
     }
 
     public Date getCreateTime() {

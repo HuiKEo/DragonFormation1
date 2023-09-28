@@ -16,4 +16,17 @@ public interface RoleService {
      * @return
      */
     PageInfo<Role> queryAll(Integer pageNo);
+
+    /**
+     * 删除角色
+     * @param id
+     */
+    void deleteRole(Integer id);
+
+    /**
+     * 授权
+     * @param roleId
+     * @param ids
+     */
+    void authorized(Integer roleId, Integer[] ids);
 }

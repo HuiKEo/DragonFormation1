@@ -6,7 +6,7 @@
     <result column="menu" jdbcType="VARCHAR" property="menu" />
     <result column="path" jdbcType="VARCHAR" property="path" />
     <result column="parentId" jdbcType="INTEGER" property="parentid" />
-    <result column="icon" jdbcType="VARCHAR" property="icon" />
+    <result column="type" jdbcType="INTEGER" property="type" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="isdeleted" jdbcType="INTEGER" property="isdeleted" />
   </resultMap>
@@ -69,7 +69,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, menu, path, parentId, icon, create_time, isdeleted
+    id, menu, path, parentId, type, create_time, isdeleted
   </sql>
   <select id="selectByExample" parameterType="com.it.pojo.MenuExample" resultMap="BaseResultMap">
     select
@@ -103,10 +103,10 @@
   </delete>
   <insert id="insert" parameterType="com.it.pojo.Menu">
     insert into menu (id, menu, path, 
-      parentId, icon, create_time, 
+      parentId, type, create_time, 
       isdeleted)
     values (#{id,jdbcType=INTEGER}, #{menu,jdbcType=VARCHAR}, #{path,jdbcType=VARCHAR}, 
-      #{parentid,jdbcType=INTEGER}, #{icon,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{parentid,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
       #{isdeleted,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.it.pojo.Menu">
@@ -124,8 +124,8 @@
       <if test="parentid != null">
         parentId,
       </if>
-      <if test="icon != null">
-        icon,
+      <if test="type != null">
+        type,
       </if>
       <if test="createTime != null">
         create_time,
@@ -147,8 +147,8 @@
       <if test="parentid != null">
         #{parentid,jdbcType=INTEGER},
       </if>
-      <if test="icon != null">
-        #{icon,jdbcType=VARCHAR},
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
@@ -179,8 +179,8 @@
       <if test="record.parentid != null">
         parentId = #{record.parentid,jdbcType=INTEGER},
       </if>
-      <if test="record.icon != null">
-        icon = #{record.icon,jdbcType=VARCHAR},
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=INTEGER},
       </if>
       <if test="record.createTime != null">
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
@@ -199,7 +199,7 @@
       menu = #{record.menu,jdbcType=VARCHAR},
       path = #{record.path,jdbcType=VARCHAR},
       parentId = #{record.parentid,jdbcType=INTEGER},
-      icon = #{record.icon,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=INTEGER},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       isdeleted = #{record.isdeleted,jdbcType=INTEGER}
     <if test="_parameter != null">
@@ -218,8 +218,8 @@
       <if test="parentid != null">
         parentId = #{parentid,jdbcType=INTEGER},
       </if>
-      <if test="icon != null">
-        icon = #{icon,jdbcType=VARCHAR},
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
       </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -235,16 +235,21 @@
     set menu = #{menu,jdbcType=VARCHAR},
       path = #{path,jdbcType=VARCHAR},
       parentId = #{parentid,jdbcType=INTEGER},
-      icon = #{icon,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       isdeleted = #{isdeleted,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <!--  List<Menu> queryMenuByRoleId(Integer id);-->
+
+<!--  List<Menu> queryMenuByRoleId(Integer id);-->
   <select id="queryMenuByRoleId" resultType="com.it.pojo.Menu">
-    SELECT distinct menu.*
-    FROM role,menu,role_menu
-    WHERE role.`id`=role_menu.`role_id` AND menu.`id` = role_menu.`menu_id`
-    AND role.`id` = #{id}
+    SELECT menu.*
+    FROM `role`,`menu`,`role_menu`
+    WHERE role.`id` = role_menu.`role_id` AND menu.`id`=role_menu.`menu_id` AND role.`id` = #{id} and role_menu.isdeleted = 1
+  </select>
+  <select id="queryMenuLevel2ByRoleId" resultType="com.it.pojo.Menu">
+    SELECT menu.*
+    FROM `role`,`menu`,`role_menu`
+    WHERE role.`id` = role_menu.`role_id` AND menu.`id`=role_menu.`menu_id` AND menu.type = 2 and role_menu.isdeleted = 1 and role.`id` = #{id}
   </select>
 </mapper>

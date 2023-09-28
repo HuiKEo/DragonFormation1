@@ -3,18 +3,15 @@ package com.it.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.it.mapper.RoleMapper;
-import com.it.mapper.UserMapper;
+import com.it.mapper.RoleMenuMapper;
 import com.it.pojo.Role;
 import com.it.pojo.RoleExample;
-import com.it.pojo.User;
+import com.it.pojo.RoleMenu;
+import com.it.pojo.RoleMenuExample;
 import com.it.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 import static com.it.utils.ObjectConstants.NAVIGATE_PAGES;
@@ -29,6 +26,8 @@ public class RoleServiceImpl implements RoleService {
 
     @Autowired
     private RoleMapper roleMapper;
+    @Autowired
+    private RoleMenuMapper roleMenuMapper;
 
     @Override
     public PageInfo<Role> queryAll(Integer pageNo) {
@@ -41,5 +40,27 @@ public class RoleServiceImpl implements RoleService {
 
         return new PageInfo<>(roleList,NAVIGATE_PAGES);
 
+    }
+
+    @Override
+    public void deleteRole(Integer id) {
+        roleMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public void authorized(Integer roleId, Integer[] ids) {
+        //删除对应的全部权限
+        RoleMenuExample roleMenuExample = new RoleMenuExample();
+        RoleMenuExample.Criteria criteria = roleMenuExample.createCriteria();
+        criteria.andRoleIdEqualTo(roleId);
+        RoleMenu roleMenu = new RoleMenu();
+        roleMenu.setRoleId(roleId);
+        roleMenu.setIsdeleted(0);
+        roleMenuMapper.updateByExampleSelective(roleMenu,roleMenuExample);
+
+        //添加权限
+        for (Integer menuId : ids) {
+            roleMenuMapper.insertSelective(new RoleMenu(roleId,menuId));
+        }
     }
 }

@@ -6,9 +6,7 @@ import com.it.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -37,4 +35,17 @@ public class RoleController {
         return "role_list";
     }
 
+    @RequestMapping(value = "/delete/{id}",method = RequestMethod.DELETE)
+    public String deleteRole(@PathVariable("id") Integer id){
+        roleService.deleteRole(id);
+        return "redirect:/role/list";
+    }
+
+    @RequestMapping(value = "/authorized",method = RequestMethod.POST)
+    @ResponseBody
+    public String authorized(@RequestParam("roleId") Integer roleId,
+                             @RequestParam("ids[]") Integer[] ids){
+        roleService.authorized(roleId,ids);
+        return "授权成功";
+    }
 }

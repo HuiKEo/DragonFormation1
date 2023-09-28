@@ -4,6 +4,7 @@ import com.it.mapper.MenuMapper;
 import com.it.mapper.RoleMapper;
 import com.it.mapper.UserMapper;
 import com.it.pojo.Menu;
+import com.it.pojo.MenuExample;
 import com.it.pojo.Role;
 import com.it.pojo.User;
 import com.it.service.MenuService;
@@ -12,9 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 /**
  * @Author Chen
@@ -52,5 +51,20 @@ public class MenuServiceImpl implements MenuService {
             menuList.add(menuMapper.selectByPrimaryKey(id));
         }
         return menuList;
+    }
+
+    @Override
+    public Map<String, Object> queryRoleMenu(Integer roleId) {
+
+        MenuExample menuExample = new MenuExample();
+        MenuExample.Criteria criteria = menuExample.createCriteria();
+        criteria.andTypeEqualTo(2);
+        List<Menu> allMenuList = menuMapper.selectByExample(menuExample);
+        List<Menu> roleMenuList = menuMapper.queryMenuLevel2ByRoleId(roleId);
+        HashMap<String, Object> menuMap = new HashMap<>();
+        menuMap.put("allMenu",allMenuList);
+        menuMap.put("roleMenu",roleMenuList);
+
+        return menuMap;
     }
 }

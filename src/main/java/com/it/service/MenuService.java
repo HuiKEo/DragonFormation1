@@ -3,6 +3,7 @@ package com.it.service;
 import com.it.pojo.Menu;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author Chen
@@ -14,4 +15,11 @@ public interface MenuService {
      * @return
      */
     List<Menu> getAuditMenu();
+
+    /**
+     * 获取对应角色的权限
+     * @param roleId
+     * @return
+     */
+    Map<String, Object> queryRoleMenu(Integer roleId);
 }
