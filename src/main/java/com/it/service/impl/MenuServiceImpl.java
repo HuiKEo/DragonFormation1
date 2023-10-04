@@ -38,6 +38,8 @@ public class MenuServiceImpl implements MenuService {
         //查询用户所具有的角色
         List<Role> roleList = roleMapper.queryRoleByUserId(user.getId());
 
+        ArrayList<Integer> roleMenuIds = new ArrayList<>();
+
         ArrayList<MenuVo> menuVoList = new ArrayList<>();
         //查询角色对应的权限
         for (Role role : roleList) {
@@ -52,12 +54,18 @@ public class MenuServiceImpl implements MenuService {
                 for (Menu menu2 : menuLevel2List) {
                     MenuVo menuVo1 = new MenuVo();
                     menuVo1.setMenu(menu2);
-                    menuVoList1.add(menuVo1);
+                    if(!roleMenuIds.contains(menu2.getId())){
+                        menuVoList1.add(menuVo1);
+                        roleMenuIds.add(menu2.getId());
+                    }
                 }
 
                 menuVo.setMenu(menu);
-                menuVo.setMenuList(menuLevel2List);
-                menuVoList.add(menuVo);
+                menuVo.setMenuList(menuVoList1);
+                if(!roleMenuIds.contains(menu.getId())){
+                    menuVoList.add(menuVo);
+                    roleMenuIds.add(menu.getId());
+                }
             }
         }
         return menuVoList;

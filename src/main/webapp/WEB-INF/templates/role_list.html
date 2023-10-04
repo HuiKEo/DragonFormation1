@@ -56,14 +56,27 @@
                     for (let i = 0; i < roleMenu.length; i++) {
                         ids.push(roleMenu[i].id);
                     }
-                    for (let j = 0; j < allMenu.length; j++) {
-                        if(ids.includes(allMenu[j].id)){
-                            str += '<div class="single-row"><div class="radio"><input type="checkbox" name="checkedMenu" checked value="'+allMenu[j].id+'"><label>'+allMenu[j].menu+'</label></div></div>'
-                        }else {
-                            str += '<div class="single-row"><div class="radio"><input type="checkbox" name="checkedMenu" value="'+allMenu[j].id+'"><label>'+allMenu[j].menu+'</label></div></div>'
-                        }
+                    // for (let j = 0; j < allMenu.length; j++) {
+                    //     if(ids.includes(allMenu[j].id)){
+                    //         str += '<div class="single-row"><div class="radio"><input type="checkbox" name="checkedMenu" checked value="'+allMenu[j].id+'"><label>'+allMenu[j].menu+'</label></div></div>'
+                    //     }else {
+                    //         str += '<div class="single-row"><div class="radio"><input type="checkbox" name="checkedMenu" value="'+allMenu[j].id+'"><label>'+allMenu[j].menu+'</label></div></div>'
+                    //     }
+                    // }
+
+                    // $("#menuCheckboxList").html(str);
+
+                    // <optgroup label="NFC EAST">
+                    //     <option>Dallas Cowboys</option>
+                    //     <option>New York Giants</option>
+                    //     <option>Philadelphia Eagles</option>
+                    //     <option>Washington Redskins</option>
+                    // </optgroup>
+
+                    for (let i = 0; i < allMenu.length; i++) {
+
                     }
-                    $("#menuCheckboxList").html(str);
+
                 }
             })
         }
@@ -243,6 +256,39 @@
                                                 <label class="col-sm-3 control-label">权限</label>
                                                 <div class="col-sm-9 icheck minimal" id="menuCheckboxList">
 
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3">权限</label>
+
+                                                <div class="col-md-9">
+                                                    <select multiple="multiple" class="multi-select" id="my_multi_select2"
+                                                            name="my_multi_select2[]">
+                                                        <optgroup label="NFC EAST">
+                                                            <option>Dallas Cowboys</option>
+                                                            <option>New York Giants</option>
+                                                            <option>Philadelphia Eagles</option>
+                                                            <option>Washington Redskins</option>
+                                                        </optgroup>
+                                                        <optgroup label="NFC NORTH">
+                                                            <option>Chicago Bears</option>
+                                                            <option>Detroit Lions</option>
+                                                            <option>Green Bay Packers</option>
+                                                            <option>Minnesota Vikings</option>
+                                                        </optgroup>
+                                                        <optgroup label="NFC SOUTH">
+                                                            <option>Atlanta Falcons</option>
+                                                            <option>Carolina Panthers</option>
+                                                            <option>New Orleans Saints</option>
+                                                            <option>Tampa Bay Buccaneers</option>
+                                                        </optgroup>
+                                                        <optgroup label="NFC WEST">
+                                                            <option>Arizona Cardinals</option>
+                                                            <option>St. Louis Rams</option>
+                                                            <option>San Francisco 49ers</option>
+                                                            <option>Seattle Seahawks</option>
+                                                        </optgroup>
+                                                    </select>
                                                 </div>
                                             </div>
                                         </form>

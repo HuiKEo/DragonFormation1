@@ -13,6 +13,6 @@ import java.util.List;
 public class MenuVo {
 
     private Menu menu;
-    private List<Menu> menuList;
+    private List<MenuVo> menuList;
 
 }
