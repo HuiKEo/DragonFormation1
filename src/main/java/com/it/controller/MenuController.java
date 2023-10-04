@@ -4,6 +4,7 @@ import com.it.pojo.Menu;
 import com.it.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -25,5 +26,12 @@ public class MenuController {
     @ResponseBody
     public Map<String,Object> queryRoleMenu(@PathVariable("roleId") Integer roleId){
         return menuService.queryRoleMenu(roleId);
+    }
+
+    @RequestMapping(value = "/list",method = RequestMethod.GET)
+    public String queryAllMenu(Model model){
+        List<Menu> menuList = menuService.queryAllMenu();
+        model.addAttribute("menuList",menuList);
+        return "menu_list";
     }
 }

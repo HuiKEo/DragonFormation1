@@ -7,6 +7,7 @@ import com.it.pojo.Menu;
 import com.it.pojo.MenuExample;
 import com.it.pojo.Role;
 import com.it.pojo.User;
+import com.it.pojo.vo.MenuVo;
 import com.it.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -31,26 +32,35 @@ public class MenuServiceImpl implements MenuService {
     private MenuMapper menuMapper;
 
     @Override
-    public List<Menu> getAuditMenu() {
+    public List<MenuVo> getAuditMenu() {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userMapper.queryUserByName(userDetails.getUsername());
+        //查询用户所具有的角色
         List<Role> roleList = roleMapper.queryRoleByUserId(user.getId());
 
-        ArrayList<Menu> menus = new ArrayList<>();
+        ArrayList<MenuVo> menuVoList = new ArrayList<>();
+        //查询角色对应的权限
         for (Role role : roleList) {
-            menus.addAll(menuMapper.queryMenuByRoleId(role.getId()));
-        }
+            //查询一级菜单
+            List<Menu> menuLevel1List = menuMapper.queryMenuByRoleId(role.getId());
+            for (Menu menu : menuLevel1List) {
+                MenuVo menuVo = new MenuVo();
 
-        //去重
-        ArrayList<Menu> menuList = new ArrayList<>();
-        HashSet<Integer> ids = new HashSet<>();
-        for (Menu menu : menus) {
-          ids.add(menu.getId());
+                ArrayList<MenuVo> menuVoList1 = new ArrayList<>();
+                //查询二级菜单
+                List<Menu> menuLevel2List = menuMapper.queryMenuLevel2ByParentId(role.getId(),menu.getId());
+                for (Menu menu2 : menuLevel2List) {
+                    MenuVo menuVo1 = new MenuVo();
+                    menuVo1.setMenu(menu2);
+                    menuVoList1.add(menuVo1);
+                }
+
+                menuVo.setMenu(menu);
+                menuVo.setMenuList(menuLevel2List);
+                menuVoList.add(menuVo);
+            }
         }
-        for (Integer id : ids) {
-            menuList.add(menuMapper.selectByPrimaryKey(id));
-        }
-        return menuList;
+        return menuVoList;
     }
 
     @Override
@@ -66,5 +76,10 @@ public class MenuServiceImpl implements MenuService {
         menuMap.put("roleMenu",roleMenuList);
 
         return menuMap;
+    }
+
+    @Override
+    public List<Menu> queryAllMenu() {
+        return menuMapper.selectByExample(null);
     }
 }

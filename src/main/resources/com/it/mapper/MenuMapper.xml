@@ -245,11 +245,17 @@
   <select id="queryMenuByRoleId" resultType="com.it.pojo.Menu">
     SELECT menu.*
     FROM `role`,`menu`,`role_menu`
-    WHERE role.`id` = role_menu.`role_id` AND menu.`id`=role_menu.`menu_id` AND role.`id` = #{id} and role_menu.isdeleted = 1
+    WHERE role.`id` = role_menu.`role_id` AND menu.`id`=role_menu.`menu_id` AND role.`id` = #{id} AND TYPE = 1 and role_menu.isdeleted = 1 AND menu.`parentId` is null
   </select>
   <select id="queryMenuLevel2ByRoleId" resultType="com.it.pojo.Menu">
     SELECT menu.*
     FROM `role`,`menu`,`role_menu`
     WHERE role.`id` = role_menu.`role_id` AND menu.`id`=role_menu.`menu_id` AND menu.type = 2 and role_menu.isdeleted = 1 and role.`id` = #{id}
+  </select>
+
+  <select id="queryMenuLevel2ByParentId" resultType="com.it.pojo.Menu">
+    SELECT menu.*
+    FROM `role`,`menu`,`role_menu`
+    WHERE role.`id` = role_menu.`role_id` AND menu.`id`=role_menu.`menu_id` AND menu.type = 2 AND role_menu.isdeleted = 1 AND role.`id` = #{roleId} AND menu.`parentId` = #{parentId}
   </select>
 </mapper>

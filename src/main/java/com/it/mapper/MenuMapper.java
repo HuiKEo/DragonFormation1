@@ -31,7 +31,7 @@ public interface MenuMapper {
     int updateByPrimaryKey(Menu record);
 
     /**
-     * 查询角色的权限
+     * 查询角色的权限 一级菜单
      * @param id
      * @return
      */
@@ -43,4 +43,12 @@ public interface MenuMapper {
      * @return
      */
     List<Menu> queryMenuLevel2ByRoleId(Integer roleId);
+
+    /**
+     * 根据parentId查询二级菜单
+     * @param roleId
+     * @param parentId
+     * @return
+     */
+    List<Menu> queryMenuLevel2ByParentId(@Param("roleId") Integer roleId,@Param("parentId") Integer parentId);
 }
