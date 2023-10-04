@@ -50,7 +50,7 @@ public class MenuServiceImpl implements MenuService {
 
                 ArrayList<MenuVo> menuVoList1 = new ArrayList<>();
                 //查询二级菜单
-                List<Menu> menuLevel2List = menuMapper.queryMenuLevel2ByParentId(role.getId(),menu.getId());
+                List<Menu> menuLevel2List = menuMapper.queryMenuLevel2ByParentIdAndRoleId(role.getId(),menu.getId());
                 for (Menu menu2 : menuLevel2List) {
                     MenuVo menuVo1 = new MenuVo();
                     menuVo1.setMenu(menu2);
@@ -74,13 +74,38 @@ public class MenuServiceImpl implements MenuService {
     @Override
     public Map<String, Object> queryRoleMenu(Integer roleId) {
 
+        ArrayList<Integer> roleMenuIds = new ArrayList<>();
+        ArrayList<MenuVo> menuVoList = new ArrayList<>();
+        //查询一级菜单
         MenuExample menuExample = new MenuExample();
         MenuExample.Criteria criteria = menuExample.createCriteria();
-        criteria.andTypeEqualTo(2);
+        criteria.andParentidIsNull();
         List<Menu> allMenuList = menuMapper.selectByExample(menuExample);
+        for (Menu menu : allMenuList) {
+            MenuVo menuVo = new MenuVo();
+
+            ArrayList<MenuVo> menuVoList1 = new ArrayList<>();
+            //查询二级菜单
+            List<Menu> menuLevel2List = menuMapper.queryMenuLevel2ByParentId(menu.getId());
+            for (Menu menu2 : menuLevel2List) {
+                MenuVo menuVo1 = new MenuVo();
+                menuVo1.setMenu(menu2);
+                if(!roleMenuIds.contains(menu2.getId())){
+                    menuVoList1.add(menuVo1);
+                    roleMenuIds.add(menu2.getId());
+                }
+            }
+
+            menuVo.setMenu(menu);
+            menuVo.setMenuList(menuVoList1);
+            if(!roleMenuIds.contains(menu.getId())){
+                menuVoList.add(menuVo);
+                roleMenuIds.add(menu.getId());
+            }
+        }
         List<Menu> roleMenuList = menuMapper.queryMenuLevel2ByRoleId(roleId);
         HashMap<String, Object> menuMap = new HashMap<>();
-        menuMap.put("allMenu",allMenuList);
+        menuMap.put("allMenu",menuVoList);
         menuMap.put("roleMenu",roleMenuList);
 
         return menuMap;

@@ -50,5 +50,7 @@ public interface MenuMapper {
      * @param parentId
      * @return
      */
-    List<Menu> queryMenuLevel2ByParentId(@Param("roleId") Integer roleId,@Param("parentId") Integer parentId);
+    List<Menu> queryMenuLevel2ByParentIdAndRoleId(@Param("roleId") Integer roleId,@Param("parentId") Integer parentId);
+
+    List<Menu> queryMenuLevel2ByParentId(Integer id);
 }
