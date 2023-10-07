@@ -8,5 +8,5 @@ import org.apache.ibatis.annotations.Param;
 
 public interface WasteInputMapper {
 
-    List<WasteInfo> findAll(WasteInfo wasteInfo);
+    List<WasteInput> findAll(WasteInput wasteInput);
 }

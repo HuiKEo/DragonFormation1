@@ -87,7 +87,7 @@
         <!-- page heading start-->
         <div class="page-heading">
             <h3>
-                出库管理
+                入库管理
             </h3>
         </div>
         <!-- page heading end-->
@@ -105,17 +105,47 @@
                         </header>
                         <div class="panel-body">
                             <div class="adv-table">
+                                <table class="display table table-bordered table-striped" id="dynamic-table">
+                                    <thead>
+                                    <tr>
+                                        <th>id</th>
+                                        <th>废物ID</th>
+                                        <th>仓库ID</th>
+                                        <th>容器ID</th>
+                                        <th>入库批次码</th>
+                                        <th>入库时间</th>
+                                        <th>入库量</th>
+                                        <th>计量单位</th>
+                                        <th>入库经办人</th>
+                                        <th>创建时间</th>
+                                        <th>OPERATE</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
 
+                                    <tr class="gradeX" th:each="a : ${all}">
+                                        <td th:text="${a.id}"></td>
+                                        <td th:text="${a.wasteId}"></td>
+                                        <td th:text="${a.warehouseId}"></td>
+                                        <td th:text="${a.containerId}"></td>
+                                        <td th:text="${a.batchCode}"></td>
+                                        <td th:text="${#dates.format(a.storageDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                                        <td th:text="${a.amount}"></td>
+                                        <td th:text="${a.measure}"></td>
+                                        <td th:text="${a.handler}"></td>
+                                        <td th:text="${#dates.format(a.createTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                                        <td>
+                                            <button class="btn btn-warning btn-sm"
+                                                    th:onclick="'update_waste('+${a.id}+')'">修改
+                                            </button>
+                                            <button class="btn btn-danger btn-sm"
+                                                    th:onclick="'delete_waste('+${a.id}+')'">删除
+                                            </button>
+                                        </td>
+                                    </tr>
 
-
-
-
-
-
-
-
-
-
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </section>
@@ -142,10 +172,11 @@
 <script src="js/modernizr.min.js"></script>
 <script src="js/jquery.nicescroll.js"></script>
 
-
-
-
-
+<!--dynamic table-->
+<script type="text/javascript" language="javascript" src="js/advanced-datatable/js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="js/data-tables/DT_bootstrap.js"></script>
+<!--dynamic table initialization -->
+<script src="js/dynamic_table_init.js"></script>
 
 <!--common scripts for all pages-->
 <script src="js/scripts.js"></script>
