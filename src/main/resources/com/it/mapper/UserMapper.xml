@@ -2,13 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.it.mapper.UserMapper">
   <resultMap id="BaseResultMap" type="com.it.pojo.User">
-    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="id" jdbcType="INTEGER" property="id" />
     <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="realname" jdbcType="VARCHAR" property="realname" />
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="IDnumber" jdbcType="VARCHAR" property="idnumber" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
     <result column="status" jdbcType="INTEGER" property="status" />
-    <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="audit_status" jdbcType="INTEGER" property="auditStatus" />
+    <result column="driver_id" jdbcType="INTEGER" property="driverId" />
+    <result column="enterprise_id" jdbcType="INTEGER" property="enterpriseId" />
+    <result column="disposition_id" jdbcType="INTEGER" property="dispositionId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="isdeleted" jdbcType="INTEGER" property="isdeleted" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -69,7 +75,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, username, password, IDnumber, phone, status, createTime
+    id, username, realname, password, IDnumber, phone, status, audit_status, driver_id, 
+    enterprise_id, disposition_id, create_time, isdeleted
   </sql>
   <select id="selectByExample" parameterType="com.it.pojo.UserExample" resultMap="BaseResultMap">
     select
@@ -77,7 +84,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from users
+    from user
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -85,38 +92,35 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from users
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from users
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
   <delete id="deleteByExample" parameterType="com.it.pojo.UserExample">
-    delete from users
+    delete from user
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.it.pojo.User">
-    insert into users (id, username, password, 
-      IDnumber, phone, status, 
-      createTime)
-    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{idnumber,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
-      #{createtime,jdbcType=TIMESTAMP})
+    insert into user (id, username, realname, 
+      password, IDnumber, phone, 
+      status, audit_status, driver_id, 
+      enterprise_id, disposition_id, create_time, 
+      isdeleted)
+    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{realname,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{idnumber,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{auditStatus,jdbcType=INTEGER}, #{driverId,jdbcType=INTEGER}, 
+      #{enterpriseId,jdbcType=INTEGER}, #{dispositionId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{isdeleted,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.it.pojo.User">
-    insert into users
+    insert into user
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
       </if>
       <if test="username != null">
         username,
+      </if>
+      <if test="realname != null">
+        realname,
       </if>
       <if test="password != null">
         password,
@@ -130,8 +134,23 @@
       <if test="status != null">
         status,
       </if>
-      <if test="createtime != null">
-        createTime,
+      <if test="auditStatus != null">
+        audit_status,
+      </if>
+      <if test="driverId != null">
+        driver_id,
+      </if>
+      <if test="enterpriseId != null">
+        enterprise_id,
+      </if>
+      <if test="dispositionId != null">
+        disposition_id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="isdeleted != null">
+        isdeleted,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -140,6 +159,9 @@
       </if>
       <if test="username != null">
         #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="realname != null">
+        #{realname,jdbcType=VARCHAR},
       </if>
       <if test="password != null">
         #{password,jdbcType=VARCHAR},
@@ -153,25 +175,43 @@
       <if test="status != null">
         #{status,jdbcType=INTEGER},
       </if>
-      <if test="createtime != null">
-        #{createtime,jdbcType=TIMESTAMP},
+      <if test="auditStatus != null">
+        #{auditStatus,jdbcType=INTEGER},
+      </if>
+      <if test="driverId != null">
+        #{driverId,jdbcType=INTEGER},
+      </if>
+      <if test="enterpriseId != null">
+        #{enterpriseId,jdbcType=INTEGER},
+      </if>
+      <if test="dispositionId != null">
+        #{dispositionId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isdeleted != null">
+        #{isdeleted,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.it.pojo.UserExample" resultType="java.lang.Long">
-    select count(*) from users
+    select count(*) from user
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update users
+    update user
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
       <if test="record.username != null">
         username = #{record.username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.realname != null">
+        realname = #{record.realname,jdbcType=VARCHAR},
       </if>
       <if test="record.password != null">
         password = #{record.password,jdbcType=VARCHAR},
@@ -185,8 +225,23 @@
       <if test="record.status != null">
         status = #{record.status,jdbcType=INTEGER},
       </if>
-      <if test="record.createtime != null">
-        createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      <if test="record.auditStatus != null">
+        audit_status = #{record.auditStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.driverId != null">
+        driver_id = #{record.driverId,jdbcType=INTEGER},
+      </if>
+      <if test="record.enterpriseId != null">
+        enterprise_id = #{record.enterpriseId,jdbcType=INTEGER},
+      </if>
+      <if test="record.dispositionId != null">
+        disposition_id = #{record.dispositionId,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isdeleted != null">
+        isdeleted = #{record.isdeleted,jdbcType=INTEGER},
       </if>
     </set>
     <if test="_parameter != null">
@@ -194,54 +249,26 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update users
+    update user
     set id = #{record.id,jdbcType=INTEGER},
       username = #{record.username,jdbcType=VARCHAR},
+      realname = #{record.realname,jdbcType=VARCHAR},
       password = #{record.password,jdbcType=VARCHAR},
       IDnumber = #{record.idnumber,jdbcType=VARCHAR},
       phone = #{record.phone,jdbcType=VARCHAR},
       status = #{record.status,jdbcType=INTEGER},
-      createTime = #{record.createtime,jdbcType=TIMESTAMP}
+      audit_status = #{record.auditStatus,jdbcType=INTEGER},
+      driver_id = #{record.driverId,jdbcType=INTEGER},
+      enterprise_id = #{record.enterpriseId,jdbcType=INTEGER},
+      disposition_id = #{record.dispositionId,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      isdeleted = #{record.isdeleted,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.it.pojo.User">
-    update users
-    <set>
-      <if test="username != null">
-        username = #{username,jdbcType=VARCHAR},
-      </if>
-      <if test="password != null">
-        password = #{password,jdbcType=VARCHAR},
-      </if>
-      <if test="idnumber != null">
-        IDnumber = #{idnumber,jdbcType=VARCHAR},
-      </if>
-      <if test="phone != null">
-        phone = #{phone,jdbcType=VARCHAR},
-      </if>
-      <if test="status != null">
-        status = #{status,jdbcType=INTEGER},
-      </if>
-      <if test="createtime != null">
-        createTime = #{createtime,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.it.pojo.User">
-    update users
-    set username = #{username,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR},
-      IDnumber = #{idnumber,jdbcType=VARCHAR},
-      phone = #{phone,jdbcType=VARCHAR},
-      status = #{status,jdbcType=INTEGER},
-      createTime = #{createtime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
 
-<!--  User queryUserByName(String username);-->
+  <!--  User queryUserByName(String username);-->
   <select id="queryUserByName" resultType="com.it.pojo.User">
     select * from user where username = #{username}
   </select>

@@ -20,10 +20,5 @@ public interface UserMapper {
 
     int updateByExample(@Param("record") User record, @Param("example") UserExample example);
 
-    /**
-     * 根据姓名查询
-     * @param username
-     * @return
-     */
     User queryUserByName(String username);
 }
